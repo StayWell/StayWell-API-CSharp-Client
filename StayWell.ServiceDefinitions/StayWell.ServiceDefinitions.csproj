@@ -170,7 +170,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\IPublicSecurityService.cs" />
     <Compile Include="Security\Objects\ValidationResponse.cs" />
-    <Compile Include="ServiceLines\IPublicServiceLinesService.cs" />
+    <Compile Include="ServiceLines\IPublicServiceLineService.cs" />
     <Compile Include="ServiceLines\Objects\CreateServiceLineRequest.cs" />
     <Compile Include="ServiceLines\Objects\KeywordResponse.cs" />
     <Compile Include="ServiceLines\Objects\PagedServiceLineResponseList.cs" />

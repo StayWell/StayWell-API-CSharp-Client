@@ -7,7 +7,7 @@ using StayWell.ServiceDefinitions.ServiceLines.Objects;
 namespace StayWell.ServiceDefinitions.ServiceLines
 {
 	[ServiceContract(Name = "ServiceLines", Namespace = "http://www.kramesstaywell.com")]
-	public interface IPublicServiceLinesService
+	public interface IPublicServiceLineService
 	{
 		[WebInvoke(UriTemplate = "", Method = "GET")]
 		[Allow(ClientType = ClientType.Public, SpecialAccess = AllowedSpecialAccess.Jsonp)]
