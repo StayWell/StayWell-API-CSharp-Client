@@ -1,0 +1,17 @@
+﻿@using StayWell.ServiceDefinitions.Content.Objects
+@using StayWell.WebExample.Models
+
+@model RelatedContentModel
+@{
+    ViewBag.Title = "Display Related Content";
+}
+
+<h2>Display Related Content</h2>
+<h3>Content Related To: @Model.OriginalArticleTitle</h3>
+<ul>
+    @foreach (ContentResponse item in Model.RelatedContent)
+    {
+        <li>@item.Title</li>
+    }
+</ul>
+
