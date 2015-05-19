@@ -1,0 +1,15 @@
+﻿@using StayWell.ServiceDefinitions.Collections.Objects
+@using StayWell.WebExample.Models
+
+@model CollectionListResponse
+@{
+    ViewBag.Title = "DisplayCollections";
+}
+
+<h2>Display Collections</h2>
+<ul>
+    @foreach (CollectionResponse item in Model.Items)
+    {
+        <li>@item.Title</li>
+    }
+</ul>

@@ -12,18 +12,22 @@ using StayWell.ServiceDefinitions.Content.Objects;
 using StayWell.ServiceDefinitions.Buckets.Objects;
 
 using StayWell.WebExample.Models;
+using StayWell.ServiceDefinitions.Collections.Objects;
 
 
 namespace StayWell.WebExample.Controllers
 {
     public class ExamplesController : Controller
     {
+        private const int DEFAULT_COUNT = 50;
+
         //Create an authenticated SW API client
         private ApiClient _client = new ApiClient(ConfigurationManager.AppSettings["ApplicationId"], ConfigurationManager.AppSettings["ApplicationSecret"]);
-        private const int CONTENT_COUNT = 50;
+        
+        #region Public Controller Actions
 
         //
-        // GET: /Samples/
+        // GET: /Samples/DisplayContent
         public ActionResult DisplayContent()
         {
             //Request the specific article.  If you intend to display the full article you must send the flag "IncludeBody"
@@ -36,7 +40,7 @@ namespace StayWell.WebExample.Controllers
         }
 
         //
-        // GET: /Samples/
+        // GET: /Samples/DisplayRelatedContent
         public ActionResult DisplayRelatedContent()
         {
             RelatedContentModel model = new RelatedContentModel
@@ -48,6 +52,63 @@ namespace StayWell.WebExample.Controllers
             return View(model);
         }
 
+        //
+        // GET: /Samples/DisplayCollection
+        public ActionResult DisplayCollection()
+        {
+            CollectionResponse collection = _client.Collections.GetCollection("development-sample-license",true,true,true);
+
+            return View(collection);
+        }
+
+        //
+        // GET: /Samples/DisplayCollections
+        public ActionResult DisplayCollections()
+        {
+            CollectionListResponse collections = _client.Collections.SearchCollections(new CollectionSearchRequest
+            {
+                Count = DEFAULT_COUNT
+            });
+
+            return View(collections);
+
+        }
+
+        //
+        // GET: /Samples/DisplayBuckets
+        public ActionResult DisplayBuckets()
+        {
+            ContentBucketList buckets = _client.Buckets.SearchBuckets(new BucketSearchRequest
+            {
+                Count = DEFAULT_COUNT
+            });
+
+            return View(buckets);
+        }
+
+        //
+        // GET: /Samples/SearchContent
+        public ActionResult SearchContent(string searchString)
+        {
+            ContentList searchResults = new ContentList();
+            
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                searchResults = _client.Content.SearchContent(new ContentSearchRequest
+                {
+                    Count = DEFAULT_COUNT,
+                    Query = searchString
+
+                });
+            }
+
+            return View(searchResults);
+        }
+
+
+        #endregion
+
+        #region Private Helper Methods
 
         private List<ContentResponse> GetRelatedContent(string bucketSlug, string contentSlug)
         {
@@ -70,7 +131,7 @@ namespace StayWell.WebExample.Controllers
             ContentList relatedContent = _client.Content.SearchContent(new ContentSearchRequest
             {
                 Query = query,
-                Count = CONTENT_COUNT
+                Count = DEFAULT_COUNT
             });
 
             //Fiter out the item that we started the related to search from.
@@ -85,5 +146,7 @@ namespace StayWell.WebExample.Controllers
 
             return contentResponses;
         }
-	}
+
+        #endregion
+    }
 }

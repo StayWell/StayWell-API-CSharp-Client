@@ -1,0 +1,32 @@
+﻿@using StayWell.ServiceDefinitions.Collections.Objects
+@using StayWell.WebExample.Models
+
+@model CollectionResponse
+@helper TreeView(List<CollectionItemResponse> items)
+{
+    foreach (var item in items)
+    {
+        <li>
+            @if (item.Items==null || item.Items.Count == 0)
+            {
+                <span>@item.Title</span>
+            }
+            else
+            {
+                <span>@item.Title</span>
+                <ul>
+                    @TreeView(item.Items)
+                </ul>
+            }
+        </li>
+    }
+}
+@{
+    ViewBag.Title = "Display Collection";
+}
+
+<h2>Display Collection</h2>
+
+<ul>
+    @TreeView(Model.Items)
+</ul>
