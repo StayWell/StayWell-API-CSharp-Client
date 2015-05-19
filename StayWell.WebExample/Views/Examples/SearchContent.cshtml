@@ -1,0 +1,28 @@
+﻿@using StayWell.ServiceDefinitions.Content.Objects
+@using StayWell.WebExample.Models
+@model ContentList
+
+@{
+    ViewBag.Title = "SearchContent";
+}
+
+<h2>Search Content</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Search: @Html.TextBox("SearchString") <input type="submit" value="Filter" />
+    </p>
+}
+
+@if (Model.Items != null)
+{
+    <hr />
+    <h4>Search Results</h4>
+    <ul>
+        @foreach (ContentResponse item in Model.Items)
+        {
+            <li>@item.Title</li>
+        }
+    </ul>
+}
