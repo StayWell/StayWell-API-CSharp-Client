@@ -65,7 +65,11 @@ namespace StayWell.WebExample.Controllers
             contentToDownload.AddRange(ConvertToContentModel(contentFromBuckets));
             contentToDownload.AddRange(ConvertToContentModel(collectionItemResponses));
 
-            //Trim the results so that the page can properly render the list.
+            //At this point the content can be downloaded from the contentToDownload collection.
+            //Since the process of downloading the content is very system specific I am leaving
+            //that part up to the implementer.
+
+            //Trim the results so that the list size doesn't overwhelm the webpage.
             contentToDownload = TrimContentListForWebDisplay(contentToDownload);
 
             //return View(contentToDownload);
