@@ -1,0 +1,33 @@
+﻿@using StayWell.ServiceDefinitions.Content.Objects
+@using StayWell.WebExample.Models
+@model List<ContentModel>
+
+@{
+    ViewBag.Title = "Download All Content";
+}
+
+<h2>Download Content</h2>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Type</th>
+        <th>Bucket Slug</th>
+        <th>Content Slug</th>
+        <th>Title</th>
+    </tr>
+    @foreach (ContentModel item in Model)
+    {
+        <tr>
+            <td>@item.Type</td>
+            <td>@item.BucketSlug</td>
+            <td>@item.Slug</td>
+            <td>@item.Title</td>
+        </tr>
+    }
+</table>
+
+@if (Model.Count == 500)
+{
+    <br /><br />
+    <div>For display purposes the content listed on this page has been truncated.  The full list of content to download was requested from SW API behind the scenes.</div>
+}

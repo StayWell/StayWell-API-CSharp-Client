@@ -21,12 +21,35 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Article", "DisplayContent", "Examples")</li>
-                    <li>@Html.ActionLink("Related", "DisplayRelatedContent", "Examples")</li>
-                    <li>@Html.ActionLink("Collection", "DisplayCollection", "Examples")</li>
-                    <li>@Html.ActionLink("Collections", "DisplayCollections", "Examples")</li>
-                    <li>@Html.ActionLink("Buckets", "DisplayBuckets", "Examples")</li>
-                    <li>@Html.ActionLink("Search", "SearchContent", "Examples")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Display <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Article", "DisplayContent", "Display")</li>
+                            <li>@Html.ActionLink("Related", "DisplayRelatedContent", "Display")</li>
+                            <li>@Html.ActionLink("Collection", "DisplayCollection", "Display")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">License <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Collections", "DisplayCollections", "License")</li>
+                            <li>@Html.ActionLink("Buckets", "DisplayBuckets", "License")</li>
+                            <li>@Html.ActionLink("Download", "DownloadAllContent", "License")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Interact <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Search", "SearchContent", "Interact")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Conversion <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Article", "DisplayContentByLegacyId", "Conversion")</li>
+                            <li>@Html.ActionLink("Verify Legacy Ids", "VerifyLegacyIds", "Conversion")</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

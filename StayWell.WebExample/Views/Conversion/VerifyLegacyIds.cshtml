@@ -1,0 +1,52 @@
+﻿@using StayWell.ServiceDefinitions.Collections.Objects
+@using StayWell.WebExample.Models
+
+@model LegacyContentValidationReportModel
+@{
+    ViewBag.Title = "Verify Legacy Ids";
+}
+<h2>Verify Legacy Ids</h2>
+
+This tool accepts a file of legacy IDs and validates that each is avilable within a SW API license.
+<div>
+    @using (Html.BeginForm("VerifyLegacyIds", "Conversion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div>
+            File: <input type="file" name="UploadedFile" />
+            <input type="submit" name="Submit" value="Submit" />
+        </div>
+    }
+</div>
+<h3>Example File Format</h3>
+<div>
+    138,W117<br />
+    1,45
+</div>
+
+@if (Model != null && Model.Items.Count > 0)
+{
+    <hr />
+    <h3>Validation Results</h3>
+    <h4>Summary</h4>
+    <ul>
+        <li>Total: @Model.ItemCount</li>
+        <li>Error Count: @Model.ErrorCount</li>
+    </ul>
+    <h4>Error Items</h4>
+    foreach (LegacyContentModel item in Model.Items)
+    {
+        if (item.IsAvailable == false)
+        {
+            <div>@item.ContentTypeId,@item.ContentId</div>
+        }
+    }
+    
+    <h4>Found Items</h4>
+    foreach (LegacyContentModel item in Model.Items)
+    {
+        if (item.IsAvailable == true)
+        {
+            <div>@item.ContentTypeId,@item.ContentId</div>
+        }
+    }
+}
