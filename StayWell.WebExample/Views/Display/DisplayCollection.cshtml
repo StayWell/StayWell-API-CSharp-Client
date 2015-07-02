@@ -27,6 +27,11 @@
 
 <h2>Display Collection</h2>
 
+<h3>@Model.Title</h3>
+<p>
+    <img src="@Model.ImageUri" style="width: 100px;" /> @Model.Description
+</p><br />
+<h4>Collection Contents</h4>
 <ul>
     @TreeView(Model.Items)
 </ul>
