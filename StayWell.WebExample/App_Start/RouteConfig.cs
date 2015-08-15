@@ -14,10 +14,36 @@ namespace StayWell.WebExample
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+              name: "VideoLibraryCategory",
+              url: "Content/Videos/{categorySlug}",
+              defaults: new { controller = "Example", action = "VideosByTopic", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+               name: "VideoLibrary",
+               url: "Content/Videos/",
+               defaults: new { controller = "Example", action = "Videos", id = UrlParameter.Optional }
+           );
+
+            routes.MapRoute(
+                name: "ClosedCaptioning",
+                url: "Content/{bucketSlug}/{contentSlug}/Captions.dfxp.xml",
+                defaults: new { controller = "Example", action = "Captions", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+               name: "Content",
+               url: "Content/{bucketSlug}/{contentSlug}",
+               defaults: new { controller = "Example", action = "Index", id = UrlParameter.Optional }
+           );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+
         }
     }
 }

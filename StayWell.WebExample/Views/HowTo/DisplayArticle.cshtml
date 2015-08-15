@@ -4,7 +4,9 @@
 @{
     ViewBag.Title = Model.Title;
 }
-
+<div class="section-header">
+    <h1>How To: Display an Article</h1>
+</div>
 <h2>@Model.Title</h2>
 @foreach (ContentSegmentResponse segment in Model.Segments)
 {

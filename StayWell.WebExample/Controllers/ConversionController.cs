@@ -36,10 +36,17 @@ namespace StayWell.WebExample.Controllers
         //
         // GET: /Conversion/VerifyLegacyIds/
         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)] //Disable cache to ensure the file uploaded is the alwasys the latest.
-        public ActionResult VerifyLegacyIds(FormCollection formCollection)
+        public ActionResult VerifyLegacyIds(string ApplicationKey, string ApplicationSecret)
         {
             if (Request != null)
             {
+                //If values are provided we will override the default application key and secret from configuration.
+                ApiClient localClient = _client;
+                if (!String.IsNullOrEmpty(ApplicationKey) && !String.IsNullOrEmpty(ApplicationSecret))
+                {
+                    localClient = new ApiClient(ApplicationKey, ApplicationSecret);
+                }
+
                 LegacyContentValidationReportModel report = new LegacyContentValidationReportModel();
                 
                 //Process the uploaded file.
@@ -64,7 +71,7 @@ namespace StayWell.WebExample.Controllers
                 {
                     try
                     {
-                        ContentArticleResponse article = _client.Content.GetLegacyContent(item.ContentTypeId, item.ContentId, new LegacyContentOptions());
+                        ContentArticleResponse article = localClient.Content.GetLegacyContent(item.ContentTypeId, item.ContentId, new LegacyContentOptions());
                         item.IsAvailable = true;
                     }
                     catch (Exception ex)

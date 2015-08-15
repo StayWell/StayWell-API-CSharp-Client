@@ -1,15 +1,22 @@
 ﻿@using StayWell.ServiceDefinitions.Buckets.Objects
 @using StayWell.WebExample.Models
+@using StayWell.WebExample.Controllers
 
 @model ContentBucketList
 @{
     ViewBag.Title = "Display Buckets";
 }
-
-<h2>Display Buckets</h2>
+<div class="section-header">
+    <h1>Explore License: Show all Buckets</h1>
+</div>
 <ul>
     @foreach (ContentBucketResponse item in Model.Items)
     {
         <li>@item.Name</li>
     }
 </ul>
+
+@if ((bool)ViewData[LicenseController.IS_PUBLIC_DEMO])
+{
+    Html.RenderPartial("_PublicDemoWarningMessage");
+}

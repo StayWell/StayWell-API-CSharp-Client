@@ -5,13 +5,17 @@
 @{
     ViewBag.Title = "Verify Legacy Ids";
 }
-<h2>Verify Legacy Ids</h2>
-
+<div class="section-header">
+    <h1>Conversion: Validate Legacy Ids Against New License</h1>
+</div>
 This tool accepts a file of legacy IDs and validates that each is avilable within a SW API license.
 <div>
     @using (Html.BeginForm("VerifyLegacyIds", "Conversion", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div>
+            Application Key: @Html.TextBox("ApplicationKey")<br />
+            Application Secret: @Html.TextBox("ApplicationSecret")<br />
+            <br />
             File: <input type="file" name="UploadedFile" />
             <input type="submit" name="Submit" value="Submit" />
         </div>

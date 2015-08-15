@@ -2,6 +2,7 @@
 using StayWell.ServiceDefinitions.Buckets.Objects;
 using StayWell.ServiceDefinitions.Collections.Objects;
 using StayWell.ServiceDefinitions.Content.Objects;
+using StayWell.WebExample.App_Code;
 using StayWell.WebExample.Models;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,22 @@ namespace StayWell.WebExample.Controllers
         private const int DEFAULT_COUNT = 100;
         private const int MAX_RESULTS = 10000;
         private const int MAX_DOWNLOAD_DISPLAY_COUNT = 500;
+        public const string IS_PUBLIC_DEMO = "IsPublicDemo";
+        private const string PRIVATE_HOST_NAME = "localhost";
+        private const int TRIM_COUNT = 3;
 
         //Create an authenticated SW API client
         private ApiClient _client = new ApiClient(ConfigurationManager.AppSettings["ApplicationId"], ConfigurationManager.AppSettings["ApplicationSecret"]);
+
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            ViewData.Add(IS_PUBLIC_DEMO, true);
+
+            var hostname = requestContext.HttpContext.Request.Url.Host;
+            if (hostname == PRIVATE_HOST_NAME) ViewData[IS_PUBLIC_DEMO] = false;
+
+            base.Initialize(requestContext);
+        }
 
         #region Public Controller Actions
 
@@ -31,6 +45,15 @@ namespace StayWell.WebExample.Controllers
             {
                 Count = DEFAULT_COUNT
             });
+
+            //Trim the results if this is a public demo.
+            if (IsPublicDemo())
+            { 
+                List<CollectionResponse> trimmedList = new List<CollectionResponse>();
+                trimmedList.AddRange(collections.Items.Take(TRIM_COUNT));
+
+                collections.Items = trimmedList;
+            }
 
             return View(collections);
 
@@ -45,6 +68,15 @@ namespace StayWell.WebExample.Controllers
                 Count = DEFAULT_COUNT
             });
 
+            //Trim the results if this is a public demo.
+            if (IsPublicDemo())
+            {
+                List<ContentBucketResponse> trimmedList = new List<ContentBucketResponse>();
+                trimmedList.AddRange(buckets.Items.Take(TRIM_COUNT));
+
+                buckets.Items = trimmedList;
+            }
+
             return View(buckets);
         }
 
@@ -52,6 +84,27 @@ namespace StayWell.WebExample.Controllers
         // GET: /License/DownloadAllContent
         public ActionResult DownloadAllContent()
         {
+            //Trim results if this is a public demo.  Since this method can take a long time to run we will trim on the front end
+            //so that we don't take the time to enumerate all documents in the license
+            if (IsPublicDemo())
+            {
+                List<ContentReferenceModel> trimmedContentToDownload = new List<ContentReferenceModel>();
+                ContentBucketList buckets = SearchBuckets();
+                if(buckets.Items.Count>0)
+                {
+                    ContentList contentList = new ContentList();
+                    contentList.Items = new List<ContentResponse>();
+                    for (int i = 0; i < buckets.Items.Count && i < TRIM_COUNT; i++)
+                    {
+                        contentList.Items.AddRange(SearchContent(buckets.Items[i].Slug).Items);
+                    }
+                    List<ContentReferenceModel> contentForBucket = ConvertToContentModel(contentList);
+                    trimmedContentToDownload.AddRange(contentForBucket.Take(TRIM_COUNT));
+                }
+
+                return View(trimmedContentToDownload);
+            }
+
             //Get all items from buckets
             ContentBucketList allBuckets = GetAllBuckets();
             ContentList contentFromBuckets = GetAllContentForBuckets(allBuckets);
@@ -59,23 +112,68 @@ namespace StayWell.WebExample.Controllers
             //Get all items from collection
             CollectionListResponse collections = GetAllCollections();
             List<CollectionItemResponse> collectionItemResponses = GetAllContentForCollections(collections);
-            
+
             //Convert and combine everything into single model.
-            List<ContentModel> contentToDownload = new List<ContentModel>();
+            List<ContentReferenceModel> contentToDownload = new List<ContentReferenceModel>();
             contentToDownload.AddRange(ConvertToContentModel(contentFromBuckets));
             contentToDownload.AddRange(ConvertToContentModel(collectionItemResponses));
 
             //At this point the content can be downloaded from the contentToDownload collection.
-            //Since the process of downloading the content is very system specific I am leaving
+            //Since the process of downloading the content is very system specific we are leaving
             //that part up to the implementer.
 
             //Trim the results so that the list size doesn't overwhelm the webpage.
             contentToDownload = TrimContentListForWebDisplay(contentToDownload);
 
-            //return View(contentToDownload);
             return View(contentToDownload);
         }
 
+
+        //
+        // GET: /License/DisplayServiceLines
+        public ActionResult DisplayServiceLines(string audienceSlug, string serviceLineSlug)
+        {
+            ShowServiceLinesModel model = new ShowServiceLinesModel();
+
+            ServiceLineResponseList audiences = _client.ServiceLines.GetAllAudiences();
+            foreach (var item in audiences.Items)
+            {
+                model.Audiences.Add(item.AudienceSlug);
+            }
+
+            if (!string.IsNullOrEmpty(audienceSlug))
+            {
+                ServiceLineResponseList serviceLines = _client.ServiceLines.GetServiceLinesInAudience(audienceSlug);
+                foreach (var item in serviceLines.Items)
+                {
+                    model.ServiceLines.Add(item.ServiceLineSlug);
+                }
+                model.audienceSlug = audienceSlug;
+            }
+
+            if ((!string.IsNullOrEmpty(audienceSlug)) && (!string.IsNullOrEmpty(serviceLineSlug)))
+            {
+                ServiceLineResponseList keywords = _client.ServiceLines.GetKeywordsInServiceLine(audienceSlug, serviceLineSlug);
+                foreach (var item in keywords.Items)
+                {
+                    model.PageKeywords.Add(item.PageKeywordSlug);
+                }
+                model.serviceLineSlug = serviceLineSlug;
+            }
+
+            if (IsPublicDemo())
+            {
+                    List<string> trimmedServiceLines = new List<string>();
+                    trimmedServiceLines.AddRange(model.ServiceLines.Take(TRIM_COUNT));
+                    model.ServiceLines = trimmedServiceLines;
+
+                    List<string> trimmedKeywords = new List<string>();
+                    trimmedKeywords.AddRange(model.PageKeywords.Take(TRIM_COUNT));
+                    model.PageKeywords = trimmedKeywords;
+            }
+
+            return View(model);
+        }
         #endregion
 
         #region Download Content From License
@@ -234,6 +332,7 @@ namespace StayWell.WebExample.Controllers
             return buckets;
         }
 
+
         #endregion
 
         #region Get Content for Collections
@@ -263,9 +362,9 @@ namespace StayWell.WebExample.Controllers
             List<CollectionItemResponse> flattenedContentList = new List<CollectionItemResponse>();
             foreach (var item in items)
             {
-                if (item.Items==null || item.Items.Count == 0)
+                if (item.Items == null || item.Items.Count == 0)
                 {
-                    if(item.Type == CollectionItemType.Content) flattenedContentList.Add(item);
+                    if (item.Type == CollectionItemType.Content) flattenedContentList.Add(item);
                 }
                 else
                 {
@@ -319,13 +418,13 @@ namespace StayWell.WebExample.Controllers
         #endregion
 
         #region Convert and Trim Methods
-        private List<ContentModel> ConvertToContentModel(ContentList contentList)
+        private List<ContentReferenceModel> ConvertToContentModel(ContentList contentList)
         {
-            List<ContentModel> contentToDownload = new List<ContentModel>();
+            List<ContentReferenceModel> contentToDownload = new List<ContentReferenceModel>();
 
             foreach (ContentResponse item in contentList.Items)
             {
-                contentToDownload.Add(new ContentModel
+                contentToDownload.Add(new ContentReferenceModel
                 {
                     BucketSlug = item.Bucket.Slug,
                     Type = item.Type.ToString(),
@@ -337,13 +436,13 @@ namespace StayWell.WebExample.Controllers
             return contentToDownload;
         }
 
-        private List<ContentModel> ConvertToContentModel(List<CollectionItemResponse> collectionItems)
+        private List<ContentReferenceModel> ConvertToContentModel(List<CollectionItemResponse> collectionItems)
         {
-            List<ContentModel> contentToDownload = new List<ContentModel>();
+            List<ContentReferenceModel> contentToDownload = new List<ContentReferenceModel>();
 
             foreach (CollectionItemResponse item in collectionItems)
             {
-                contentToDownload.Add(new ContentModel
+                contentToDownload.Add(new ContentReferenceModel
                 {
                     BucketSlug = item.Bucket.Slug,
                     Type = item.Type.ToString(),
@@ -355,11 +454,11 @@ namespace StayWell.WebExample.Controllers
             return contentToDownload;
         }
 
-        private List<ContentModel> TrimContentListForWebDisplay(List<ContentModel> contentListToTrim)
+        private List<ContentReferenceModel> TrimContentListForWebDisplay(List<ContentReferenceModel> contentListToTrim)
         {
             if (contentListToTrim.Count > MAX_DOWNLOAD_DISPLAY_COUNT)
             {
-                List<ContentModel> trimmedContentToDisplay = new List<ContentModel>();
+                List<ContentReferenceModel> trimmedContentToDisplay = new List<ContentReferenceModel>();
                 for (int i = 0; i < MAX_DOWNLOAD_DISPLAY_COUNT; i++)
                 {
                     trimmedContentToDisplay.Add(contentListToTrim[i]);
@@ -374,5 +473,11 @@ namespace StayWell.WebExample.Controllers
 
         #endregion
 
+        #region Private Methods
+        private bool IsPublicDemo()
+        {
+            return (bool)ViewData[IS_PUBLIC_DEMO];
+        }
+        #endregion
     }
 }

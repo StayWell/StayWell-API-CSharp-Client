@@ -20,9 +20,21 @@ namespace StayWell.WebExample
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/flowplayer").Include(
+                      "~/Scripts/flowplayer.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/handlebars").Include(
+                      "~/Scripts/handlebars-v3.0.3.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/mixitup").Include(
+                      "~/Scripts/jquery.mixitup.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/custom.css",
+                      "~/Content/FlowplayerSkins/functional.css",
+                      "~/Content/yamm.css"));
         }
     }
 }

@@ -5,8 +5,9 @@
 @{
     ViewBag.Title = "Display Related Content";
 }
-
-<h2>Display Related Content</h2>
+<div class="section-header">
+    <h1>How To: Get Related Content</h1>
+</div>
 <h3>Content Related To: @Model.OriginalArticleTitle</h3>
 <ul>
     @foreach (ContentResponse item in Model.RelatedContent)

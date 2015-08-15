@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -48,12 +51,24 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -111,35 +126,96 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\ApiClientExtension.cs" />
+    <Compile Include="App_Code\ContentCategoryFactory.cs" />
+    <Compile Include="App_Code\Mappers\ContentReferenceModelMapper.cs" />
+    <Compile Include="App_Code\Mappers\MappingToGroupedContentModelMapper.cs" />
+    <Compile Include="App_Code\Mappers\ContentToGroupedContentModelMapper.cs" />
+    <Compile Include="App_Code\Mappers\IMapToNew.cs" />
+    <Compile Include="App_Code\StayWellAPIClientFactory.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Api\VideoLibraryController.cs" />
     <Compile Include="Controllers\ConversionController.cs" />
-    <Compile Include="Controllers\DisplayController.cs" />
+    <Compile Include="Controllers\HowToController.cs" />
+    <Compile Include="Controllers\ExampleController.cs" />
     <Compile Include="Controllers\InteractController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LicenseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ContentModel.cs" />
+    <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\ContentReferneceModel.cs" />
+    <Compile Include="Models\ContentWithRelationshipModel.cs" />
+    <Compile Include="Models\GroupedContentModel.cs" />
+    <Compile Include="Models\GroupedServiceLineModel.cs" />
     <Compile Include="Models\LegacyContentValidationReportModel.cs" />
     <Compile Include="Models\LegacyContentModel.cs" />
     <Compile Include="Models\RelatedContentModel.cs" />
+    <Compile Include="Models\ShowServiceLinesModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Custom.css" />
+    <Content Include="Content\flowplayer.swf" />
+    <Content Include="Content\flowplayerhls.swf" />
+    <Content Include="Content\FlowplayerSkins\all-skins.css" />
+    <Content Include="Content\FlowplayerSkins\fonts\fpicons.svg" />
+    <Content Include="Content\FlowplayerSkins\functional.css" />
+    <Content Include="Content\FlowplayerSkins\img\black%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\black.png" />
+    <Content Include="Content\FlowplayerSkins\img\black_rtl%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\black_rtl.png" />
+    <Content Include="Content\FlowplayerSkins\img\flowplayer%402x.png" />
+    <Content Include="Content\FlowplayerSkins\img\flowplayer.png" />
+    <Content Include="Content\FlowplayerSkins\img\playful_black%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\playful_black.png" />
+    <Content Include="Content\FlowplayerSkins\img\playful_black_rtl%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\playful_black_rtl.png" />
+    <Content Include="Content\FlowplayerSkins\img\playful_white%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\playful_white.png" />
+    <Content Include="Content\FlowplayerSkins\img\playful_white_rtl%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\playful_white_rtl.png" />
+    <Content Include="Content\FlowplayerSkins\img\play_black%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\play_black.png" />
+    <Content Include="Content\FlowplayerSkins\img\play_black_rtl%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\play_black_rtl.png" />
+    <Content Include="Content\FlowplayerSkins\img\play_white%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\play_white.png" />
+    <Content Include="Content\FlowplayerSkins\img\play_white_rtl%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\play_white_rtl.png" />
+    <Content Include="Content\FlowplayerSkins\img\white%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\white.png" />
+    <Content Include="Content\FlowplayerSkins\img\white_rtl%40x2.png" />
+    <Content Include="Content\FlowplayerSkins\img\white_rtl.png" />
+    <Content Include="Content\FlowplayerSkins\minimalist.css" />
+    <Content Include="Content\FlowplayerSkins\playful.css" />
+    <Content Include="Content\yamm.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ajax-loader-indicator-lite.gif" />
+    <Content Include="Images\imagePlaceholder.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\FlowplayerSkins\fonts\fpicons.eot" />
+    <Content Include="Content\FlowplayerSkins\fonts\fpicons.ttf" />
+    <Content Include="Content\FlowplayerSkins\fonts\fpicons.woff" />
+    <Content Include="ContentConfig\RelatedServicesCategories.config" />
+    <Content Include="ContentConfig\VideoLibraryCategories.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\flowplayer.js" />
+    <Content Include="Scripts\handlebars-v3.0.3.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.mixitup.js" />
+    <Content Include="Scripts\JSONP.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -153,7 +229,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -161,15 +239,26 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Display\DisplayContent.cshtml" />
-    <Content Include="Views\Display\DisplayRelatedContent.cshtml" />
-    <Content Include="Views\Display\DisplayCollection.cshtml" />
-    <Content Include="Views\Interact\SearchContent.cshtml" />
+    <Content Include="Views\HowTo\DisplayArticle.cshtml" />
+    <Content Include="Views\HowTo\DisplayRelatedContent.cshtml" />
+    <Content Include="Views\HowTo\DisplayCollection.cshtml" />
+    <Content Include="Views\HowTo\SearchContent.cshtml" />
     <Content Include="Views\License\DisplayCollections.cshtml" />
     <Content Include="Views\License\DisplayBuckets.cshtml" />
     <Content Include="Views\License\DownloadAllContent.cshtml" />
     <Content Include="Views\Conversion\DisplayContentByLegacyId.cshtml" />
     <Content Include="Views\Conversion\VerifyLegacyIds.cshtml" />
+    <Content Include="Views\Example\Index.cshtml" />
+    <Content Include="Views\Example\Centers.cshtml" />
+    <Content Include="Views\HowTo\DisplayVideo.cshtml" />
+    <Content Include="Views\Example\Captions.cshtml" />
+    <Content Include="Views\HowTo\DisplayJSONP.cshtml" />
+    <Content Include="Views\HowTo\DisplayArticleLink.cshtml" />
+    <Content Include="Views\Example\Anatomy3D.cshtml" />
+    <Content Include="Views\Example\Videos.cshtml" />
+    <Content Include="Views\Example\VideosByTopic.cshtml" />
+    <Content Include="Views\License\DisplayServiceLines.cshtml" />
+    <Content Include="Views\License\_PublicDemoWarningMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StayWell.ClientFramework\StayWell.ClientFramework.csproj">

@@ -6,48 +6,89 @@
     <title>@ViewBag.Title - StayWell API - Web Examples</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse yamm navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @*@Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })*@
+                <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">StayWell API</a>
             </div>
-            <div class="navbar-collapse collapse">
+            <div id="navbar-collapse-1" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Display <span class="caret"></span></a>
+                    <li class="dropdown yamm-fw">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Experience <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Article", "DisplayContent", "Display")</li>
-                            <li>@Html.ActionLink("Related", "DisplayRelatedContent", "Display")</li>
-                            <li>@Html.ActionLink("Collection", "DisplayCollection", "Display")</li>
+                            <li class="mega-menu">
+                                <div class="row">
+                                    <div class="col-sm-3 menu-column">
+                                        <h3>Content Display</h3>
+                                        <ul>
+                                            <li><a href="/Content/diseases-and-conditions/absence-seizures">Article</a></li>
+                                            <li><a href="/Content/videos-v2/carpal-tunnel-syndrome">Video</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-3 menu-column">
+                                        <h3>Content Sections</h3>
+                                        <ul>
+                                            <li><a href="/Content/videos">Video Library</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-3 menu-column">
+                                        <h3>Plugins (Beta)</h3>
+                                        <ul>
+                                            <li>@Html.ActionLink("3D Anatomy", "Anatomy3D", "Example")</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-6 menu-column">
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">License <span class="caret"></span></a>
+                    <!-- Accordion demo -->
+                    <li class="dropdown yamm-fw">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Development Center<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Collections", "DisplayCollections", "License")</li>
-                            <li>@Html.ActionLink("Buckets", "DisplayBuckets", "License")</li>
-                            <li>@Html.ActionLink("Download", "DownloadAllContent", "License")</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Interact <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Search", "SearchContent", "Interact")</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Conversion <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Article", "DisplayContentByLegacyId", "Conversion")</li>
-                            <li>@Html.ActionLink("Verify Legacy Ids", "VerifyLegacyIds", "Conversion")</li>
+                            <li class="mega-menu">
+                                <div class="row">
+                                    <div class="col-sm-3 menu-column">
+                                        <h3>How To</h3>
+                                        <ul>
+                                            <li>@Html.ActionLink("Display Article", "DisplayArticle", "HowTo")</li>
+                                            <li>@Html.ActionLink("Display Article via JSONP", "DisplayJSONP", "HowTo")</li>
+                                            <li>@Html.ActionLink("Display Article Link", "DisplayArticleLink", "HowTo")</li>
+                                            <li>@Html.ActionLink("Display Video", "DisplayVideo", "HowTo")</li>
+                                            <li>@Html.ActionLink("Display Collection", "DisplayCollection", "HowTo")</li>
+                                            <li>@Html.ActionLink("Get Related Content", "DisplayRelatedContent", "HowTo")</li>
+                                            <li>@Html.ActionLink("Perform Search", "SearchContent", "HowTo")</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-3 menu-column">
+                                        <h3>Explore License</h3>
+                                        <ul>
+                                            <li>@Html.ActionLink("Show Collections", "DisplayCollections", "License")</li>
+                                            <li>@Html.ActionLink("Show Buckets", "DisplayBuckets", "License")</li>
+                                            <li>@Html.ActionLink("Download Content", "DownloadAllContent", "License")</li>
+                                            <li>@Html.ActionLink("Show Service Lines", "DisplayServiceLines", "License")</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-3 menu-column">
+                                        <h3>Conversion</h3>
+                                        <ul>
+                                            <li>@Html.ActionLink("Display Legacy Article", "DisplayContentByLegacyId", "Conversion")</li>
+                                            <li>@Html.ActionLink("Verify Legacy Ids", "VerifyLegacyIds", "Conversion")</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-3 menu-column">
+                                        <h3>More Resources</h3>
+                                        <ul>
+                                            <li><a href="https://github.com/StayWell/StayWell-API-CSharp-Client">Download this code on GitHub.com</a></li>
+                                            <li><a href="https://admin.kramesstaywell.com/docs">Documentation</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -64,6 +105,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/flowplayer")
+    @Scripts.Render("~/bundles/handlebars")
     @RenderSection("scripts", required: false)
 </body>
 </html>

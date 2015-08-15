@@ -38,7 +38,6 @@ namespace StayWell.WebExample.Controllers
                 {
                     Count = DEFAULT_COUNT,
                     Query = searchString
-
                 });
             }
 

@@ -1,0 +1,19 @@
+﻿@using StayWell.ServiceDefinitions.Content.Objects
+
+@model StreamingMediaResponse
+@{
+    ViewBag.Title = Model.Title;
+}
+<div class="section-header">
+    <h1>How To: Display a Video</h1>
+</div>
+<div class="flowplayer is-splash" style="background-image: url(@Model.ImageUri);" data-key="$170954793413711,$103737256684481,$333970518248932,$220529912050272">
+    <video id="Video-@Model.Slug" width="640" height="360">
+        @foreach (StreamingMediaFormatResponse format in Model.Formats)
+        {
+            <source src="@format.Uri" type="@format.MimeType" />
+        }
+        <track kind="captions" src="/Content/@Model.Bucket.Slug/@Model.Slug/Captions.dfxp.xml" srclang="en" label="English"></track> <!--Tracks need an ending tag thanks to IE9-->
+    </video>
+</div>
+
