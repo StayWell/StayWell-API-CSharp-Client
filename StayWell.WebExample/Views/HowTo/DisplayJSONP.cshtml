@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "DisplayJSONP";
+}
+
+<div class="section-header">
+    <h1>How To: Display an Article via JSONP</h1>
+</div>
+
+<div id="ArticleBody">Loading...</div>
+
+
+@Scripts.Render("~/scripts/JSONP.js")
+@section scripts {
+    <script type="text/javascript">
+        //Global variables
+        var appId = "@ViewData["AppId"]";
+        var jsonpCallbacks = { cntr: 0 };
+
+        $(document).ready(function () {
+
+            var bucketSlug = "diseases-and-conditions";
+            var contentSlug = "aortic-valve-regurgitation";
+            GetArticle(bucketSlug, contentSlug);
+        });
+
+        function GetArticle(bucketSlug, contentSlug) {
+            var name = "GetArticle";
+            var callback = "jsonpCallbacks." + name;
+
+            // put that function in a globally accessible place for JSONP to call
+            jsonpCallbacks[name] = function (data) {
+                // upon success, remove the name
+                delete jsonpCallbacks[name];
+                DisplayArticle(data);
+            };
+            JsonpCall("https://api.kramesstaywell.com/Content/" + bucketSlug + "/" + contentSlug + ".jsonp?includeBody=true", callback);
+        }
+
+        function DisplayArticle(data) {
+
+            var content = "<h2>" + data.Title + "</h2>";
+            content += "<div>";
+
+            for (var i = 0; i < data.Segments.length; i++) {
+
+                var segmentName = data.Segments[i].Name;
+                if (data.Segments[i].CustomName != null && data.Segments[i].CustomName != "") segmentName = data.Segments[i].CustomName;
+
+                content += "<h3>" + segmentName + "</h3>";
+                content += data.Segments[i].Body;
+            }
+            content += "</div>";
+
+            $("#ArticleBody").html(content);
+        }
+    </script>
+}

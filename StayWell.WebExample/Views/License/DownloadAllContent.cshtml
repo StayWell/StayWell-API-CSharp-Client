@@ -1,12 +1,14 @@
 ﻿@using StayWell.ServiceDefinitions.Content.Objects
 @using StayWell.WebExample.Models
-@model List<ContentModel>
+@using StayWell.WebExample.Controllers
 
+@model List<ContentReferenceModel>
 @{
     ViewBag.Title = "Download All Content";
 }
-
-<h2>Download Content</h2>
+<div class="section-header">
+    <h1>Explore License: Download All Content</h1>
+</div>
 
 <table border="1" cellpadding="5">
     <tr>
@@ -15,7 +17,7 @@
         <th>Content Slug</th>
         <th>Title</th>
     </tr>
-    @foreach (ContentModel item in Model)
+    @foreach (ContentReferenceModel item in Model)
     {
         <tr>
             <td>@item.Type</td>
@@ -30,4 +32,9 @@
 {
     <br /><br />
     <div>For display purposes the content listed on this page has been truncated.  The full list of content to download was requested from SW API behind the scenes.</div>
+}
+
+@if ((bool)ViewData[LicenseController.IS_PUBLIC_DEMO])
+{
+    Html.RenderPartial("_PublicDemoWarningMessage");
 }

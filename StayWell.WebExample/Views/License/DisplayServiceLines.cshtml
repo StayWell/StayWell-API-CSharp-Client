@@ -1,0 +1,61 @@
+﻿@using StayWell.ServiceDefinitions.Content.Objects
+@using StayWell.WebExample.Models
+@using StayWell.WebExample.Controllers
+
+@model ShowServiceLinesModel
+@{
+    ViewBag.Title = "DisplayServiceLines";
+}
+<div class="section-header">
+    <h1>Explore License: Display Service Lines</h1>
+</div>
+
+@using (Html.BeginForm("DisplayServiceLines", "License", FormMethod.Get))
+{
+
+    <fieldset>
+        @Html.LabelFor(model => model.audienceSlug, "Audience")
+        @Html.DropDownListFor(model => model.audienceSlug, new SelectList(Model.Audiences), "Select Audience") <br />
+        @if (Model.ServiceLines.Count > 0)
+        {
+            @Html.LabelFor(model => model.serviceLineSlug, "Service Line")
+            @Html.DropDownListFor(model => model.serviceLineSlug, new SelectList(Model.ServiceLines), "Select Service Line") <br />
+        }
+        <input type="submit" name="Submit" />
+    </fieldset>
+}
+
+@if (Model.PageKeywords.Count > 0)
+{
+    <br /><br />
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Audience</th>
+            <th>Service Line</th>
+            <th>Keyword</th>
+        </tr>
+        @foreach (string item in Model.PageKeywords)
+        {
+            <tr>
+                <td>@Model.audienceSlug</td>
+                <td>@Model.serviceLineSlug</td>
+                <td>@item</td>
+            </tr>
+        }
+    </table>
+}
+
+@if (Model.InvalidServiceLines.Count > 0)
+{
+    <ul>
+        @foreach (string item in Model.InvalidServiceLines)
+        {
+            <li>@item</li>
+        }
+    </ul>
+}
+
+@if ((bool)ViewData[LicenseController.IS_PUBLIC_DEMO])
+{
+    Html.RenderPartial("_PublicDemoWarningMessage");
+}

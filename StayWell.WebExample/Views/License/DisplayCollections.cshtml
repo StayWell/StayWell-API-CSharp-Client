@@ -1,15 +1,22 @@
 ﻿@using StayWell.ServiceDefinitions.Collections.Objects
 @using StayWell.WebExample.Models
+@using StayWell.WebExample.Controllers
 
 @model CollectionListResponse
 @{
     ViewBag.Title = "DisplayCollections";
 }
-
-<h2>Display Collections</h2>
+<div class="section-header">
+    <h1>Explore License: Show all Collections</h1>
+</div>
 <ul>
     @foreach (CollectionResponse item in Model.Items)
     {
         <li>@item.Title</li>
     }
 </ul>
+
+@if ((bool)ViewData[LicenseController.IS_PUBLIC_DEMO])
+{
+    Html.RenderPartial("_PublicDemoWarningMessage");
+}
