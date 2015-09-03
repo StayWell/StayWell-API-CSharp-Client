@@ -1,0 +1,251 @@
+﻿@using StayWell.ServiceDefinitions.Collections.Objects
+@using StayWell.WebExample.Models
+
+<div class="section-header">
+    <h1>@ViewData["Title"]</h1>
+</div>
+<div class="row">
+    <div class="col-lg-4 section-listing">
+        <h2>Explore By Topic Area</h2>
+        <div id="Topics">
+            <br /><span id="LoadingTopics" class="loading-indicator"><img src='/Images/ajax-loader-indicator-lite.gif' alt='Loading' title='Loading' /> Loading...</span>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <span id="LoadingTopicIndexPage" class="loading-indicator"><img src='/Images/ajax-loader-indicator-lite.gif' alt='Loading' title='Loading' /> Loading...</span>
+        <div id="TopicIndexPage"></div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/history")
+@section scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //Process Inititial State
+            var uri = window.location.pathname;
+            RouteRequest(uri);
+
+            // Bind to State Change
+            History.Adapter.bind(window, 'statechange', function () { // Note: We are using statechange instead of popstate
+                var State = History.getState(); // Note: We are using History.getState() instead of event.state
+                var uriParser = document.createElement('a');
+                uriParser.href = State.url;
+
+                //Hack for different browsers.  IE does not include the starting slush but
+                //Chrome does include the slash.
+                if (uriParser.pathname.charAt(0)!="/") uri = "/" + uriParser.pathname;
+                else uri = uriParser.pathname
+
+                RouteRequest(uri);
+            });
+        });
+
+        function RouteRequest(uri) {
+            //Define the URL Paths
+            var loadTopics = /^\/TopicArea\/[\w-]+\/?$/;                            //Get: /TopicArea/{CollectionSlug}
+            var loadTopicIndexPage = /^\/TopicArea\/[\w-]+\/[\w-]+\/[\w-]+\/?$/;    //Get: /TopicArea/{CollectionSlug}/{BucketSlug}/{ContentSlug}
+
+            //Route the path to the proper processes
+            
+            if (loadTopics.test(uri)) {
+                //Get the slugs
+                var slug = GetCollectionSlug();
+
+                //Load the sections
+                LoadTopics(slug);
+                ResetTopicIndexPage();
+
+            } else if (loadTopicIndexPage.test(uri)) {
+                //Get the slugs
+                var collectionSlug = GetCollectionSlug();
+                var bucketSlug = GetBucketSlug();
+                var contentSlug = GetContentSlug();
+
+                //Load the sections
+                LoadTopics(collectionSlug);
+                LoadTopicIndexPage(bucketSlug, contentSlug);
+
+            } else {
+                console.log("Route not found: " + uri);
+            }
+                
+        }
+
+        function GetBucketSlug() {
+            var path = window.location.pathname;
+            var selectRegex = /^\/TopicArea\/[\w-]+\/([\w-]+)\/[\w-]+\/?$/;
+            var arr = selectRegex.exec(path);
+
+            //The entire string will match and be added to the first array element.
+            //The second element in the array represents the ([\w-) item which is the 
+            //bucket slug.
+            if (arr.length == 2) return arr[1];
+            else return null;
+        }
+
+        function GetContentSlug() {
+            var path = window.location.pathname;
+            var selectRegex = /^\/TopicArea\/[\w-]+\/[\w-]+\/([\w-]+)\/?$/;
+            var arr = selectRegex.exec(path);
+
+            //The entire string will match and be added to the first array element.
+            //The second element in the array represents the ([\w-) item which is the 
+            //content slug.
+            if (arr.length == 2) return arr[1];
+            else return null;
+        }
+
+        function GetCollectionSlug() {
+            var path = window.location.pathname;
+            var selectRegex = /^\/TopicArea\/([\w-]+)\/?/;
+            var arr = selectRegex.exec(path);
+
+            //The entire string will match and be added to the first array element.
+            //The second element in the array represents the ([\w-) item which is the 
+            //collection slug.
+            console.log(arr);
+            if (arr.length == 2) return arr[1];
+            else return null;
+        }
+
+        function LoadTopics(collectionSlug) {
+            $("#LoadingTopics").show();
+
+            $.ajax({
+                type: "GET",
+                url: "/api/collections/" + collectionSlug,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    DisplayTopics(collectionSlug, msg);
+                    console.log(msg);
+                },
+                error: function (request, status, error) {
+                    $("#LoadingTopicIndexPage").hide();
+                    console.log(error);
+                }
+            });
+        }
+
+        function DisplayTopics(collectionSlug, topicList) {
+            topicList.Items.sort(CompareTitle);
+            var topics = GroupForDisplay(collectionSlug, topicList);
+
+            var source = $("#topic-listing-template").html();
+            var template = Handlebars.compile(source);
+
+            var html = template(topics);
+            $("#Topics").html(html);
+
+
+            $("#TopicListings a").click(function (e) {
+                var url = $(e.target).attr("href");
+                
+                //Push the state change
+                History.pushState(null, null, url);
+                e.preventDefault(); //Prevent the href from executing.  Pushing the state will take care of the change.
+                window.scrollTo(0,0); //Scroll to top so that you can see the state change.
+            });
+        }
+
+        function GroupForDisplay(collectionSlug, topicList) {
+            var previousLetter = "";
+            var displayTopicList = { CollectionSlug: collectionSlug, Items: [] };
+            for (var i = 0; i < topicList.Items.length; i++) {
+                var item = topicList.Items[i];
+
+                //If the topic doesn't contain a topic index page then leave it off the final list.
+                var topicIndexPage = GetTopicIndexPage(item);
+                if (topicIndexPage!=null) {
+                    var currentLetter = item.Title.charAt(0);
+
+                    if (currentLetter != previousLetter) {
+                        displayTopicList.Items.push({ Letter: currentLetter, Items: [] });
+                        previousLetter = currentLetter;
+                    }
+
+                    displayTopicList.Items[displayTopicList.Items.length - 1].Items.push({ Title: item.Title, Slug: topicIndexPage.Slug, BucketSlug: topicIndexPage.Bucket.Slug });
+                }
+            }
+            console.log(displayTopicList);
+            return displayTopicList;
+        }
+
+        function GetTopicIndexPage(subTopicList) {
+            
+            var searchString = "topic";
+
+            if (subTopicList.Items == null) return null;
+            for (var i = 0; i < subTopicList.Items.length; i++) {
+                var item = subTopicList.Items[i];
+
+                //Slice and compare is a O(1) vs. IndexOf is O(n)
+                if (item.Title.slice(0, searchString.length).toUpperCase() == searchString.toUpperCase()) return item;
+            }
+
+            return null;
+        }
+
+        function CompareTitle(a, b) {
+            if (a.Title < b.Title)
+                return -1;
+            if (a.Title > b.Title)
+                return 1;
+            return 0;
+        }
+
+        function ResetTopicIndexPage() {
+            $("#LoadingTopicIndexPage").hide();
+            $("#TopicIndexPage").html("");
+        }
+
+
+        function LoadTopicIndexPage(bucketSlug, contentSlug) {
+            ResetTopicIndexPage();
+
+            $("#LoadingTopicIndexPage").show();
+            $.ajax({
+                type: "GET",
+                url: "/api/content/" + bucketSlug + "/" + contentSlug,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    DisplayTopicPage(msg);
+                },
+                error: function (request, status, error) {
+                    ResetTopicIndexPage();
+                    $("#TopicIndexPage").html("An error occured while loading the Topic Page.  It's possible that the license being used does not have access to this content.");
+                    console.log(error);
+                }
+            });
+        }
+
+        function DisplayTopicPage(topicIndexPage) {
+            var output = "";
+            for (var i = 0; i < topicIndexPage.Segments.length; i++) {
+                output += topicIndexPage.Segments[i].Body;
+            }
+            //The default h1 is too large for the styling on this page.  Change to a h2.
+            output = output.replace("h1", "h2");
+
+            $("#LoadingTopicIndexPage").hide();
+            $("#TopicIndexPage").html(output);
+        }
+    </script>
+
+    <script id="topic-listing-template" type="text/x-handlebars-template">
+        <ul id="TopicListings">
+            {{#each Items}}
+            <li>
+                <span class="letter">{{Letter}}</span>
+                <ul class="listing">
+                    {{#each Items}}
+                    <li><a href="/TopicArea/{{../../CollectionSlug}}/{{BucketSlug}}/{{Slug}}">{{Title}}</a></li>
+                    {{/each}}
+                </ul>
+            </li>
+            {{/each}}
+        </ul>
+    </script>
+}

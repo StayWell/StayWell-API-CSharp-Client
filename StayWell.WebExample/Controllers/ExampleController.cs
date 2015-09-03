@@ -14,6 +14,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using StayWell.WebExample.App_Code.Mappers;
 using HtmlAgilityPack;
+using StayWell.ServiceDefinitions.Collections.Objects;
 
 namespace StayWell.WebExample.Controllers
 {
@@ -27,7 +28,7 @@ namespace StayWell.WebExample.Controllers
         #region Public Controller Actions
 
         //
-        // GET: /Example/
+        // GET: /Display Article\Video/
         public ActionResult Index()
         {
             ContentWithRelationshipModel model = new ContentWithRelationshipModel();
@@ -64,9 +65,10 @@ namespace StayWell.WebExample.Controllers
                 //If segments are present convert all internal links to real links
                 if (model.Article.Segments != null)
                 {
+                    ContentLinkConverter linkConverter = new ContentLinkConverter();
                     foreach (ContentSegmentResponse segment in model.Article.Segments)
                     {
-                        segment.Body = ConvertContentLinksToRealLinks(segment.Body);
+                        segment.Body = linkConverter.ConvertContentLinksToRealLinks(segment.Body);
                     }
                 }
             }
@@ -126,6 +128,19 @@ namespace StayWell.WebExample.Controllers
             return View();
         }
 
+        public ActionResult AtoZ()
+        {
+            return View();
+        }
+
+        public ActionResult TopicExplorer(string collectionSlug, string bucketSlug, string contentSlug)
+        {
+            CollectionResponse response = _client.Collections.GetCollection(collectionSlug, false, false, false);
+            ViewData["Title"] = response.Title;
+            
+            return View();
+        }
+
         public ActionResult VideosByTopic()
         {
             //Try to get the slug objects
@@ -166,26 +181,7 @@ namespace StayWell.WebExample.Controllers
 
         #region Private Methods
 
-        private string ConvertContentLinksToRealLinks(string contentBody)
-        {
-            HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
-            htmlDoc.LoadHtml(contentBody);
-
-            HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes("//a[@data-content-slug]");
-            if (nodes != null)
-            {
-                foreach (HtmlNode linkNode in nodes)
-                {
-                    HtmlAttribute contentSlug = linkNode.Attributes["data-content-slug"];
-                    HtmlAttribute bucketSlug = linkNode.Attributes["data-bucket-slug"];
-
-                    //This line should reflect the path you use to display your content.
-                    linkNode.Attributes.Add("href", "/Content/" + bucketSlug.Value + "/" + contentSlug.Value);
-                }
-            }
-
-            return htmlDoc.DocumentNode.OuterHtml;
-        }
+        
 
         private string GetQueryStringFromServiceLines(Category category)
         {

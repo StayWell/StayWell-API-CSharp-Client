@@ -126,8 +126,12 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\CollectionsController.cs" />
+    <Compile Include="Api\ContentSearchController.cs" />
+    <Compile Include="Api\ContentControlle.cs" />
     <Compile Include="App_Code\ApiClientExtension.cs" />
     <Compile Include="App_Code\ContentCategoryFactory.cs" />
+    <Compile Include="App_Code\ContentLinkConverter.cs" />
     <Compile Include="App_Code\Mappers\ContentReferenceModelMapper.cs" />
     <Compile Include="App_Code\Mappers\MappingToGroupedContentModelMapper.cs" />
     <Compile Include="App_Code\Mappers\ContentToGroupedContentModelMapper.cs" />
@@ -199,6 +203,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ajax-loader-horizontal-lite.gif" />
     <Content Include="Images\ajax-loader-indicator-lite.gif" />
     <Content Include="Images\imagePlaceholder.png" />
     <Content Include="Scripts\bootstrap.js" />
@@ -213,6 +218,7 @@
     <Content Include="Scripts\handlebars-v3.0.3.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.history.js" />
     <Content Include="Scripts\jquery.mixitup.js" />
     <Content Include="Scripts\JSONP.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -258,6 +264,8 @@
     <Content Include="Views\Example\VideosByTopic.cshtml" />
     <Content Include="Views\License\DisplayServiceLines.cshtml" />
     <Content Include="Views\License\_PublicDemoWarningMessage.cshtml" />
+    <Content Include="Views\Example\TopicExplorer.cshtml" />
+    <Content Include="Views\Example\AtoZ.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StayWell.ClientFramework\StayWell.ClientFramework.csproj">

@@ -1,0 +1,29 @@
+﻿@using StayWell.ServiceDefinitions.Content.Objects
+
+@model ContentArticleResponse
+@{
+    ViewBag.Title = "Display Article Link";
+}
+<div class="section-header">
+    <h1>How To: Display an Article Link</h1>
+</div>
+<h2>@Model.Title</h2>
+@foreach (ContentSegmentResponse segment in Model.Segments)
+{
+    <!--
+        Some articles will customize the segment name to make them more specific.  In order to leverage these specific names
+        you should display the custom name if it is not null or empty
+    -->
+
+    if (String.IsNullOrEmpty(segment.CustomName))
+    {
+        <h3>@segment.Name</h3>
+    }
+    else
+    {
+        <h3>@segment.CustomName</h3>
+    }
+
+    <p>@Html.Raw(segment.Body)</p>
+}
+

@@ -1,0 +1,47 @@
+﻿@using StayWell.ServiceDefinitions.Content.Objects
+@using StayWell.WebExample.Models
+
+@model GroupedContentModel
+@{
+    ViewBag.Title = "Video Library";
+}
+
+<div class="section-header">
+    <h1>Video Library: @Model.Title (@Model.Items.Count)</h1>
+</div>
+<div class="row video-library">
+    @*<div class="btn-group">
+        <div class="btn-group">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    A-Z
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right">
+                    @for (char c = 'A'; c <= 'Z'; c++)
+                    {
+                        <li><a href="#">@c</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-sort glyph-bn"></span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right">
+                    <li data-sort="data-date" data-order="desc"><a href="#">Newest to Oldest</a></li>
+                    <li data-sort="data-date" data-order="asc"><a href="#">Oldest to Newest</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div><br />*@
+    @foreach (ContentReferenceModel item in Model.Items)
+    {
+        <div class="panel col-xs-3">
+            <div class="panel-body"><a href="/Content/@item.BucketSlug/@item.Slug" class="media-link"><img alt="@item.Title" title="@item.Title" class="img-responsive" src="@item.ImageUri" style="display: block;"><span class="media-icon"><span class="glyphicon glyphicon-play"></span> @item.Duration</span></a></div>
+            <div class="panel-footer"><strong>@item.Title</strong><br /><span class="meta-data">Views: @item.ViewCount</span></div>
+        </div>
+    }
+</div>

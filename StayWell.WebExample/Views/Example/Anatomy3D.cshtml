@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Anatomy 3D";
+}
+<div class="section-header">
+    <h1>Staywell Anatomy 3D Plugin (Beta)</h1>
+</div>
+<div class="staywell-anatomy" data-anatomykey="HeartBasic"></div>
+
+@section scripts {
+    <script>
+        (function (d, scriptId) {
+            window._swapi_app_id = 'e6153528-1260-4378-bdef-a484010b8cfe';
+            // Example: 'http://www.test.com/{bucket-slug}/{content-slug}/rest-of-url';
+            window._swapi_content_link_configuration = '';
+            var swapiSdk = d.getElementById(scriptId);
+            if (swapiSdk) return;
+            swapiSdk = d.createElement('script');
+            swapiSdk.type = 'text/javascript';
+            swapiSdk.src = '//admin.kramesstaywell.com/plugins/PluginScripts/staywell-plugin-sdk-1.0.js';
+            swapiSdk.id = scriptId;
+            d.body.insertBefore(swapiSdk, d.body.firstChild);
+        }(document, 'swapiSdk'));
+    </script>
+}

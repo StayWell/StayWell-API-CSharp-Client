@@ -55,26 +55,9 @@ namespace StayWell.WebExample.Api
                 {
                     groupedContent.Items.Add(mapper.Map(video));
                 }
-
-                //if (videos.Total > 4)
-                //{
-                //    groupedContent.IsMoreItems = true;
-                //    for (int i = 4; i < videos.Total; i++)
-                //    { 
-                //        groupedContent.Items.Add(new ContentReferenceModel{
-                //             Title = "Loading..."
-                //        });
-                //    }
-                //}
             }
 
             return groupedContent;
-        }
-
-        // GET api/<controller>/cardiovascular?page={1}
-        public string Get(string category, string page)
-        {
-            return "value";
         }
 
         #region Private Methods

@@ -35,6 +35,9 @@ namespace StayWell.WebExample
                       "~/Content/custom.css",
                       "~/Content/FlowplayerSkins/functional.css",
                       "~/Content/yamm.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/history").Include(
+                     "~/Scripts/jquery.history.js"));
         }
     }
 }
