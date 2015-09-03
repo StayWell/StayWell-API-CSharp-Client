@@ -1,0 +1,212 @@
+﻿@{
+    ViewBag.Title = "A-Z";
+}
+<div class="section-header">
+    <h1>A-Z</h1>
+</div>
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#diseases-and-conditions" aria-controls="diseases-and-conditions" role="tab" data-toggle="tab" data-buckets="diseases-and-conditions">Diseases and Conditions</a></li>
+        <li role="presentation"><a href="#tests-and-procedures" aria-controls="test-and-procedures" role="tab" data-toggle="tab" data-buckets="tests-and-procedures">Tests and Procedures</a></li>
+        <li role="presentation"><a href="#drugs-and-supplements" aria-controls="drugs-and-supplements" role="tab" data-toggle="tab" data-buckets="alchemy-patient-education-sheets">Drugs and Supplements</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="diseases-and-conditions">
+            @*<div class="atoz"></div>*@
+            @*Find: <input type="text" />*@
+        </div>
+        <div role="tabpanel" class="tab-pane" id="tests-and-procedures">
+            @*<div class="atoz"></div>*@
+            @*Find: <input type="text" />*@
+        </div>
+        <div role="tabpanel" class="tab-pane" id="drugs-and-supplements">
+            @*<div class="atoz"></div>*@
+            @*Find: <input type="text" />*@
+        </div>
+    </div>
+    <!-- /Tabbed View Version -->
+</div>
+<br /><br />
+<span id="LoadingResults" class="loading-indicator"><img src='/Images/ajax-loader-indicator-lite.gif' alt='Loading' title='Loading' /> Loading...</span>
+<div id="Results" class="section-listing"></div>
+<span id="InfiniteLoadingResults" class="loading-indicator"><img src='/Images/ajax-loader-horizontal-lite.gif' alt='Loading' title='Loading' /> Loading...</span>
+
+@section scripts {
+    <script type="text/javascript">
+        var _alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        var _alphabetIndex = 0;
+
+        var ITEM_REQUEST_BATCH_COUNT = 100;
+        var DEFAULT_TOP = 100;
+
+        $(document).ready(function () {
+            InitializeTabChangeEvent();
+            DisplayAtoZ();
+            InitializeListing();
+        });
+
+        function InitializeTabChangeEvent() {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                _alphabetIndex = 0;
+                DisplayAtoZ();
+                DisableInfiniteScroll();
+                InitializeListing();
+
+                
+            })
+        }
+
+
+        function DisplayAtoZ() {
+            //Initialize A-Z Buttons
+            var source = $("#a-to-z-template").html();
+            var template = Handlebars.compile(source);
+
+            var html = template(_alphabet);
+            $(".atoz").html(html);
+
+            //Initiatlize A-Z Placeholders
+            source = $("#listing-placeholder-template").html();
+            template = Handlebars.compile(source);
+
+            html = template(_alphabet);
+            $("#Results").html(html);
+        }
+
+        function InitializeListing() {
+            $("#LoadingResults").show();
+            ShowTopOfList();
+        }
+
+        function ShowTopOfList(requestState, letterResults) {
+
+            //Initialize the Request
+            if (requestState == undefined || requestState == null) {
+                requestState = {
+                    TotaltemCount: 0,
+                    CurrentLetter: _alphabet[_alphabetIndex],
+                    Buckets: $(".active a").data("buckets")
+                };
+                _alphabetIndex++;
+            }
+
+            //Display letter results if present
+            if (letterResults != undefined && letterResults != null) {
+                DisplayLetter(requestState.CurrentLetter, letterResults);
+                requestState.TotaltemCount += letterResults.length;
+
+                //Update the request to continue processing if necessary.
+                if (requestState.TotaltemCount < ITEM_REQUEST_BATCH_COUNT && _alphabetIndex < _alphabet.length) {
+                    requestState.CurrentLetter = _alphabet[_alphabetIndex];
+                    _alphabetIndex++;
+                } else requestState = null;
+
+                $("#LoadingResults").hide();
+            }
+
+            //If more content needs to load initially load more data.
+            if (requestState!=null) {
+                GetListByLetter(requestState, ShowTopOfList);
+            } else {
+                if (_alphabetIndex < _alphabet.length) EnableInfiniteScroll();
+                $("#InfiniteLoadingResults").hide();
+            }
+        }
+
+        function GetListByLetter(requestState, onSuccess) {
+            GetEntireList(requestState, 0, [], onSuccess);
+        }
+
+        function GetEntireList(requestState, skip, items, onSuccess) {
+            if (items == undefined || items == null) items = [];
+
+            $.ajax({
+                type: "GET",
+                url: "/api/contentsearch/" + requestState.CurrentLetter + "/" + requestState.Buckets +"/" + DEFAULT_TOP + "/" + skip,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+
+                    //Combine the paged items
+                    items = items.concat(msg.Items);
+                    console.log(msg);
+                    console.log(items);
+
+                    if (items.length < msg.Total) {
+                        skip += DEFAULT_TOP;
+                        GetEntireList(requestState, skip, items, onSuccess);
+                    }
+                    else onSuccess(requestState, items);
+                },
+                error: function (request, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function DisplayLetter(letter, items) {
+            items.sort(CompareTitle);
+            var results = {Letter: letter, Items: items}
+
+            var source = $("#letter-template").html();
+            var template = Handlebars.compile(source);
+
+            var html = template(results);
+            $("[data-letter='" + letter + "']").html(html);
+            $("[data-letter='" + letter + "']").show();
+        }
+
+        function CompareTitle(a, b) {
+            if (a.Title < b.Title)
+                return -1;
+            if (a.Title > b.Title)
+                return 1;
+            return 0;
+        }
+
+        function EnableInfiniteScroll() {
+            $(window).scroll(function () {
+                if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                    DisableInfiniteScroll();
+
+                    $("#InfiniteLoadingResults").show();
+                    ShowTopOfList();
+                }
+            });
+        }
+
+        function DisableInfiniteScroll() {
+            $(window).unbind('scroll');
+        }
+
+    </script>
+
+    <script id="a-to-z-template" type="text/x-handlebars-template">
+        <ul>
+            {{#each this}}
+            <li><a href="AtoZ/{{this}}">{{this}}</a></li>
+            {{/each}}
+        </ul>
+    </script>
+
+    <script id="listing-placeholder-template" type="text/x-handlebars-template">
+        {{#each this}}
+        <span data-letter="{{this}}" class="hidden-initial"></span>
+        {{/each}}
+    </script>
+
+    <script id="letter-template" type="text/x-handlebars-template">
+        <ul>
+            <li>
+                <span class="letter">{{Letter}}</span>
+                <ul class="listing">
+                    {{#each Items}}
+                    <li><a href="/Content/{{Bucket.Slug}}/{{Slug}}">{{Title}}</a></li>
+                    {{/each}}
+                </ul>
+            </li>
+        </ul>
+    </script>
+}

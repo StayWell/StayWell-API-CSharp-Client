@@ -10,29 +10,9 @@
     <h1>Explore License: Download All Content</h1>
 </div>
 
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Type</th>
-        <th>Bucket Slug</th>
-        <th>Content Slug</th>
-        <th>Title</th>
-    </tr>
-    @foreach (ContentReferenceModel item in Model)
-    {
-        <tr>
-            <td>@item.Type</td>
-            <td>@item.BucketSlug</td>
-            <td>@item.Slug</td>
-            <td>@item.Title</td>
-        </tr>
-    }
-</table>
+<p>Downloading all content may take a long time depending on the size of the license.</p>
+<a class="btn btn-primary btn-default" href="/License/DownloadContentFile">Download Content</a>
 
-@if (Model.Count == 500)
-{
-    <br /><br />
-    <div>For display purposes the content listed on this page has been truncated.  The full list of content to download was requested from SW API behind the scenes.</div>
-}
 
 @if ((bool)ViewData[LicenseController.IS_PUBLIC_DEMO])
 {

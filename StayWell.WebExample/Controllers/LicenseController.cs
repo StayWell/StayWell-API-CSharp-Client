@@ -7,6 +7,7 @@ using StayWell.WebExample.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -48,7 +49,7 @@ namespace StayWell.WebExample.Controllers
 
             //Trim the results if this is a public demo.
             if (IsPublicDemo())
-            { 
+            {
                 List<CollectionResponse> trimmedList = new List<CollectionResponse>();
                 trimmedList.AddRange(collections.Items.Take(TRIM_COUNT));
 
@@ -84,50 +85,46 @@ namespace StayWell.WebExample.Controllers
         // GET: /License/DownloadAllContent
         public ActionResult DownloadAllContent()
         {
+            return View();
+        }
+
+        //
+        // GET: /License/DownloadContentFile
+        public FileStreamResult DownloadContentFile()
+        {
             //Trim results if this is a public demo.  Since this method can take a long time to run we will trim on the front end
             //so that we don't take the time to enumerate all documents in the license
-            if (IsPublicDemo())
-            {
-                List<ContentReferenceModel> trimmedContentToDownload = new List<ContentReferenceModel>();
-                ContentBucketList buckets = SearchBuckets();
-                if(buckets.Items.Count>0)
-                {
-                    ContentList contentList = new ContentList();
-                    contentList.Items = new List<ContentResponse>();
-                    for (int i = 0; i < buckets.Items.Count && i < TRIM_COUNT; i++)
-                    {
-                        contentList.Items.AddRange(SearchContent(buckets.Items[i].Slug).Items);
-                    }
-                    List<ContentReferenceModel> contentForBucket = ConvertToContentModel(contentList);
-                    trimmedContentToDownload.AddRange(contentForBucket.Take(TRIM_COUNT));
-                }
-
-                return View(trimmedContentToDownload);
-            }
-
-            //Get all items from buckets
-            ContentBucketList allBuckets = GetAllBuckets();
-            ContentList contentFromBuckets = GetAllContentForBuckets(allBuckets);
-
-            //Get all items from collection
-            CollectionListResponse collections = GetAllCollections();
-            List<CollectionItemResponse> collectionItemResponses = GetAllContentForCollections(collections);
-
-            //Convert and combine everything into single model.
+           
             List<ContentReferenceModel> contentToDownload = new List<ContentReferenceModel>();
-            contentToDownload.AddRange(ConvertToContentModel(contentFromBuckets));
-            contentToDownload.AddRange(ConvertToContentModel(collectionItemResponses));
+            if (IsPublicDemo()) contentToDownload = GetContentForPublicDemoDownload();
+            else contentToDownload = GetContentForDownload();
 
-            //At this point the content can be downloaded from the contentToDownload collection.
+            //At this point the content can be downloaded from the contentToDownload list.
             //Since the process of downloading the content is very system specific we are leaving
             //that part up to the implementer.
 
-            //Trim the results so that the list size doesn't overwhelm the webpage.
-            contentToDownload = TrimContentListForWebDisplay(contentToDownload);
+            //Create a file for download
+            MemoryStream memoryStream = new MemoryStream();
+            TextWriter tw = new StreamWriter(memoryStream);
 
-            return View(contentToDownload);
+            tw.WriteLine("Title,Bucket Slug,Content Slug, Legacy ID");
+            foreach (var item in contentToDownload)
+            {
+                string legacyId = item.LegacyId;
+                if (legacyId != null) legacyId = item.LegacyId.Replace(',', '-');
+                else legacyId = string.Empty;
+
+                tw.WriteLine(item.Title.Replace(",", "") + "," + item.BucketSlug + "," + item.Slug + "," + legacyId);
+            }
+            tw.Flush();
+            memoryStream.Flush();
+            memoryStream.Position = 0;
+
+            FileStreamResult result = new FileStreamResult(memoryStream, "application/csv");
+            result.FileDownloadName = "licensedownload.csv";
+            
+            return result;
         }
-
 
         //
         // GET: /License/DisplayServiceLines
@@ -163,13 +160,13 @@ namespace StayWell.WebExample.Controllers
 
             if (IsPublicDemo())
             {
-                    List<string> trimmedServiceLines = new List<string>();
-                    trimmedServiceLines.AddRange(model.ServiceLines.Take(TRIM_COUNT));
-                    model.ServiceLines = trimmedServiceLines;
+                List<string> trimmedServiceLines = new List<string>();
+                trimmedServiceLines.AddRange(model.ServiceLines.Take(TRIM_COUNT));
+                model.ServiceLines = trimmedServiceLines;
 
-                    List<string> trimmedKeywords = new List<string>();
-                    trimmedKeywords.AddRange(model.PageKeywords.Take(TRIM_COUNT));
-                    model.PageKeywords = trimmedKeywords;
+                List<string> trimmedKeywords = new List<string>();
+                trimmedKeywords.AddRange(model.PageKeywords.Take(TRIM_COUNT));
+                model.PageKeywords = trimmedKeywords;
             }
 
             return View(model);
@@ -177,6 +174,50 @@ namespace StayWell.WebExample.Controllers
         #endregion
 
         #region Download Content From License
+
+        private List<ContentReferenceModel> GetContentForPublicDemoDownload()
+        {
+            List<ContentReferenceModel> trimmedContentToDownload = new List<ContentReferenceModel>();
+            ContentBucketList buckets = SearchBuckets();
+            if (buckets.Items.Count > 0)
+            {
+                ContentList contentList = new ContentList();
+                contentList.Items = new List<ContentResponse>();
+                for (int i = 0; i < buckets.Items.Count && i < TRIM_COUNT; i++)
+                {
+                    contentList.Items.AddRange(SearchContent(buckets.Items[i].Slug).Items);
+                }
+                List<ContentReferenceModel> contentForBucket = ConvertToContentModel(contentList);
+
+                //Remove all duplicates.
+                contentForBucket = RemoveDuplicates(contentForBucket);
+
+                //Trim for public demo.
+                trimmedContentToDownload.AddRange(contentForBucket.Take(TRIM_COUNT));
+            }
+            return trimmedContentToDownload;
+        }
+
+        private List<ContentReferenceModel> GetContentForDownload()
+        {
+            //Get all items from buckets
+            ContentBucketList allBuckets = GetAllBuckets();
+            ContentList contentFromBuckets = GetAllContentForBuckets(allBuckets);
+
+            //Get all items from collection
+            CollectionListResponse collections = GetAllCollections();
+            List<CollectionItemResponse> collectionItemResponses = GetAllContentForCollections(collections);
+
+            //Convert and combine everything into single model.
+            List<ContentReferenceModel> contentToDownload = new List<ContentReferenceModel>();
+            contentToDownload.AddRange(ConvertToContentModel(contentFromBuckets));
+            contentToDownload.AddRange(ConvertToContentModel(collectionItemResponses));
+
+            //Remove all duplicates.
+            contentToDownload = RemoveDuplicates(contentToDownload);
+
+            return contentToDownload;
+        }
 
         #region Get Content for Buckets
         private ContentBucketList GetAllBuckets()
@@ -258,9 +299,10 @@ namespace StayWell.WebExample.Controllers
             ContentList contentForBucket = new ContentList();
             contentForBucket.Items = new List<ContentResponse>();
 
-            for (char c = 'A'; c <= 'Z'; c++)
+            List<string> firstLetterList = GetFirstLetterList();
+            foreach(string firstLetter in firstLetterList)
             {
-                ContentList contentResponse = SearchContent(bucketSlug, c.ToString());
+                ContentList contentResponse = SearchContent(bucketSlug, firstLetter.ToString());
                 int offset = 0;
                 int page = 0;
                 bool isDoneTraversing = false;
@@ -271,7 +313,7 @@ namespace StayWell.WebExample.Controllers
                     if (contentResponse.Items.Count == DEFAULT_COUNT)
                     {
                         offset += DEFAULT_COUNT;
-                        contentResponse = SearchContent(bucketSlug, c.ToString(), offset);
+                        contentResponse = SearchContent(bucketSlug, firstLetter, offset);
                         page++;
                     }
                     else isDoneTraversing = true;
@@ -330,6 +372,22 @@ namespace StayWell.WebExample.Controllers
             });
 
             return buckets;
+        }
+
+        private List<string> GetFirstLetterList()
+        {
+            List<string> firstLetterList = new List<string>();
+            for (int i = 0; i < 10; i++) firstLetterList.Add(i.ToString());
+            for (char c = 'A'; c <= 'Z'; c++) firstLetterList.Add(c.ToString());
+            firstLetterList.AddRange(new List<string>
+            {
+                "\"",
+                "'",
+                "-",
+                "_"
+            });
+
+            return firstLetterList;
         }
 
 
@@ -429,7 +487,8 @@ namespace StayWell.WebExample.Controllers
                     BucketSlug = item.Bucket.Slug,
                     Type = item.Type.ToString(),
                     Slug = item.Slug,
-                    Title = item.Title
+                    Title = item.Title,
+                    LegacyId = item.LegacyId
                 });
             }
 
@@ -447,28 +506,27 @@ namespace StayWell.WebExample.Controllers
                     BucketSlug = item.Bucket.Slug,
                     Type = item.Type.ToString(),
                     Slug = item.Slug,
-                    Title = item.Title
+                    Title = item.Title,
+                    LegacyId = item.LegacyId
                 });
             }
 
             return contentToDownload;
         }
 
-        private List<ContentReferenceModel> TrimContentListForWebDisplay(List<ContentReferenceModel> contentListToTrim)
+        private List<ContentReferenceModel> RemoveDuplicates(List<ContentReferenceModel> items)
         {
-            if (contentListToTrim.Count > MAX_DOWNLOAD_DISPLAY_COUNT)
+            List<ContentReferenceModel> deDupedList = new List<ContentReferenceModel>();
+            foreach (ContentReferenceModel item in items)
             {
-                List<ContentReferenceModel> trimmedContentToDisplay = new List<ContentReferenceModel>();
-                for (int i = 0; i < MAX_DOWNLOAD_DISPLAY_COUNT; i++)
+                if (!deDupedList.Exists(c => c.Slug == item.Slug && c.BucketSlug == item.BucketSlug))
                 {
-                    trimmedContentToDisplay.Add(contentListToTrim[i]);
+                    deDupedList.Add(item);
                 }
-
-                contentListToTrim = trimmedContentToDisplay;
             }
-
-            return contentListToTrim;
+            return deDupedList;
         }
+
         #endregion
 
         #endregion

@@ -1,0 +1,19 @@
+﻿@using StayWell.ServiceDefinitions.Content.Objects
+
+@model ContentArticleResponse
+@{
+    ViewBag.Title = Model.Title;
+}
+<div class="section-header">
+    <h1>Conversion: Display Article via Legacy Id</h1>
+</div>
+<h2>@Model.Title</h2>
+@foreach (ContentSegmentResponse segment in Model.Segments)
+{
+    <!--
+        Some articles will customize the segment name to make them more specific.  In order to leverage these specific names
+        you should display the custom name if it is not null or empty
+    -->
+    <p>@Html.Raw(segment.Body)</p>
+}
+
