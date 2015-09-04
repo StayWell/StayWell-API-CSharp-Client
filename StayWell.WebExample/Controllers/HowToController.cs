@@ -119,6 +119,27 @@ namespace StayWell.WebExample.Controllers
             return View(article);
         }
 
+        public ActionResult SearchByPublishedDate()
+        {
+            DateTime fromDate = DateTime.Now.AddDays(-180);
+
+            string searchString = "published-date:>=" + fromDate.ToString("yyyy-MM-DD");
+            ContentList searchResults = _client.Content.SearchContent(new ContentSearchRequest
+            {
+                Count = 5,
+                Query = searchString
+            });
+
+            //Create the model
+            SearchByPublishedDateModel model = new SearchByPublishedDateModel
+            {
+                FromDate = fromDate,
+                Items = searchResults.Items
+            };
+
+            return View(model);
+        }
+
         //
         // GET: /HowTo/SearchContent
         public ActionResult SearchContent(string searchString)

@@ -1,0 +1,26 @@
+﻿@using StayWell.ServiceDefinitions.Content.Objects
+@using StayWell.WebExample.Models
+@model SearchByPublishedDateModel
+
+@{
+    ViewBag.Title = "Search By Published ";
+}
+
+<div class="section-header">
+    <h1>How To: Search By Published Date</h1>
+</div>
+
+<p>
+    Search From Date: @Model.FromDate.ToShortDateString()
+</p>
+@if (Model.Items != null)
+{
+    <hr />
+    <h4>Search Results: Top 5</h4>
+    <ul>
+        @foreach (ContentResponse item in Model.Items)
+        {
+            <li>@item.DatePublished: @item.Title</li>
+        }
+    </ul>
+}

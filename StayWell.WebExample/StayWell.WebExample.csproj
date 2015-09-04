@@ -158,6 +158,7 @@
     <Compile Include="Models\LegacyContentValidationReportModel.cs" />
     <Compile Include="Models\LegacyContentModel.cs" />
     <Compile Include="Models\RelatedContentModel.cs" />
+    <Compile Include="Models\SearchByPublishedDateModel.cs" />
     <Compile Include="Models\ShowServiceLinesModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -266,6 +267,7 @@
     <Content Include="Views\License\_PublicDemoWarningMessage.cshtml" />
     <Content Include="Views\Example\TopicExplorer.cshtml" />
     <Content Include="Views\Example\AtoZ.cshtml" />
+    <Content Include="Views\HowTo\SearchByPublishedDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StayWell.ClientFramework\StayWell.ClientFramework.csproj">
