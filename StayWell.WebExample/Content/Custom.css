@@ -341,7 +341,7 @@ h2 {
 }
 
 .loading-indicator {
-    display: none;
+    
 }
 
 section {
@@ -380,6 +380,10 @@ section {
     .listing a {
         cursor: pointer;
     }
+
+.clickable-link {
+    cursor: pointer;
+}
 
 .letter {
     font-family: 'Arial Bold', 'Arial';
