@@ -341,7 +341,6 @@ h2 {
 }
 
 .loading-indicator {
-    display: none;
 }
 
 section {
@@ -380,6 +379,10 @@ section {
     .listing a {
         cursor: pointer;
     }
+
+.clickable-link {
+    cursor: pointer;
+}
 
 .letter {
     font-family: 'Arial Bold', 'Arial';
@@ -421,12 +424,31 @@ section {
         list-style: none;
     }
 
-
-
         .atoz ul li {
             display: inline-block;
         }
 
+    .atoz .active-letter {
+        color: white;
+        background-color: #2baad4;
+    }
+
 .hidden-initial {
     display: none;
+}
+
+/*Overwritten Bootstrap Styles*/
+.tab-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+
+.nav-tabs {
+    margin-bottom: 0;
+}
+
+.view-all-items {
+    padding-left: 15px;
 }
