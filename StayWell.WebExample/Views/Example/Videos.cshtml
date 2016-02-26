@@ -186,7 +186,11 @@
 
     <script id="video-item-template" type="text/x-handlebars-template">
         <div class="panel col-xs-3">
-            <div class="panel-body"><a href="{{#ifElseBlank this.Slug}}#{{else}}/Content/{{../BucketSlug}}/{{../Slug}}{{/ifElseBlank}}" class="media-link"><img alt="{{Title}}" title="{{Title}}" class="img-responsive media-thumbnail" src="{{#ifElseBlank ImageUri}}/Images/imagePlaceholder.png{{else}}{{../ImageUri}}{{/ifElseBlank}}" style="display: block;"><span class="media-icon"><span class="glyphicon glyphicon-play"></span> <span class="placeholder-duration">{{Duration}}</span></span></a></div>
+            <div class="panel-body content-thumbnail">
+                <a href="{{#ifElseBlank this.Slug}}#{{else}}/Content/{{../BucketSlug}}/{{../Slug}}{{/ifElseBlank}}">
+                    <span class="media-link"><img alt="{{Title}}" title="{{Title}}" class="img-responsive media-thumbnail" src="{{#ifElseBlank ImageUri}}/Images/imagePlaceholder.png{{else}}{{../ImageUri}}{{/ifElseBlank}}" style="display: block;"><span class="media-icon"><span class="glyphicon glyphicon-play"></span> <span class="placeholder-duration">{{Duration}}</span></span></span>
+                </a>
+            </div>
             <div class="panel-footer"><strong><span class="placeholder-title">{{Title}}</span></strong><br /><span class="meta-data">Views: <span class="placeholder-viewcount">{{ViewCount}}</span></span></div>
         </div>
     </script>

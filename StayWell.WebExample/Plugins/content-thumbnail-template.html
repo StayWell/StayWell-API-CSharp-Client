@@ -1,0 +1,19 @@
+﻿    {{#ifElseBlank ImageUri}}
+<a href="{{getContentPath ../Bucket.Slug ../Slug}}">
+    <h4>{{../TypeName}}</h4>
+    <h3>{{../Title}}</h3>
+    {{{../Description}}}
+</a>
+    {{else}}
+<div class="content-thumbnail">
+    <a href="{{getContentPath ../Bucket.Slug ../Slug}}" data-bucketslug="{{../Bucket.Slug}}" data-slug="{{../Slug}}">
+        <h4>{{../TypeName}}</h4>
+        <span class="media-link">
+            <img alt="{{../Title}}" title="{{../Title}}" class="img-responsive" src="{{../ImageUri}}" style="display: block;"><span class="media-icon"><span class="glyphicon glyphicon-play"></span> {{../Duration}}</span>
+        </span>
+    </a>
+    <a href="{{getContentPath ../Bucket.Slug ../Slug}}">
+        <h3 class="media-link-title">{{../Title}}</h3>
+    </a>
+</div>
+    {{/ifElseBlank}}

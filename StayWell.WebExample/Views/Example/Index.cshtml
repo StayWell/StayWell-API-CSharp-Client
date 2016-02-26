@@ -21,16 +21,20 @@
                     }
 
                         }
-                        <a href="@uri">
-                            @if (!string.IsNullOrEmpty(group.Items[i].ImageUri))
-                            {
-                                <img src="@group.Items[i].ImageUri" />
-                                <span class="media-icon">
-                                    <span class="glyphicon glyphicon-play"></span>
-                                </span>
-                            }
-                            <h3>@group.Items[i].Title</h3>
-                        </a>
+                        <div class="content-thumbnail-small">
+                            <a href="@uri">
+                                @if (!string.IsNullOrEmpty(group.Items[i].ImageUri))
+                                {
+                                    <span class="media-link">
+                                        <img src="@group.Items[i].ImageUri" />
+                                        <span class="media-icon">
+                                            <span class="glyphicon glyphicon-play"></span>
+                                        </span>
+                                    </span>
+                                }
+                                <h3>@group.Items[i].Title</h3>
+                            </a>
+                        </div>
                     </li>
                 }
             </ul>
@@ -94,9 +98,9 @@
                     if (segment.Slug != "default")
                     { <h3>@segmentName</h3> }
                     @Html.Raw(segment.Body)
-                    
+
                     if (@segment.Slug == "what-is-disease")
-                    { 
+                    {
                         @ShowClientCallToAction()
                     }
                 }
@@ -207,13 +211,15 @@
                         @for (int i = 0; i < 6 && i < topRelatedContent.Count; i++)
                         {
                             <div class="panel col-xs-4 block-panel">
-                                <div class="block-top">
+                                <div class="block-top content-thumbnail">
                                     @{GroupedContentModel parentGroup = Model.RelatedContent.Where(c => c.Items.Any(a => a.Slug == topRelatedContent[i].Slug && a.BucketSlug == topRelatedContent[i].BucketSlug)).First();}
                                     @if (!string.IsNullOrEmpty(topRelatedContent[i].ImageUri))
                                     {
-                                        <a href="/Content/@topRelatedContent[i].BucketSlug/@topRelatedContent[i].Slug" class="media-link">
+                                        <a href="/Content/@topRelatedContent[i].BucketSlug/@topRelatedContent[i].Slug">
                                             <h4>@parentGroup.Title</h4>
-                                            <img alt="@topRelatedContent[i].Title" title="@topRelatedContent[i].Title" class="img-responsive" src="@topRelatedContent[i].ImageUri" style="display: block;"><span class="media-icon"><span class="glyphicon glyphicon-play"></span> @topRelatedContent[i].Duration</span>
+                                            <span class="media-link">
+                                                <img alt="@topRelatedContent[i].Title" title="@topRelatedContent[i].Title" class="img-responsive" src="@topRelatedContent[i].ImageUri" style="display: block;"><span class="media-icon"><span class="glyphicon glyphicon-play"></span> @topRelatedContent[i].Duration</span>
+                                            </span>
                                         </a>
                                         <a href="/Content/@topRelatedContent[i].BucketSlug/@topRelatedContent[i].Slug">
                                             <h3 class="media-link-title">@topRelatedContent[i].Title</h3>
@@ -245,7 +251,7 @@
         {
             <div class="well">
                 <h1>Demo Options</h1>
-                
+
                 <h2>Display Style:</h2>
                 <div class="btn-group-sm" data-toggle="buttons">
                     <label class="btn btn-primary active">

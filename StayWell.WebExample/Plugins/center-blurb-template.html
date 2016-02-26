@@ -1,0 +1,25 @@
+﻿<div class="col-lg-6">
+    <div class="block-display-by-2">
+        <div class="left-section">
+            <a href="{{getPathCenter this}}" class="internalLink"><img src="{{ImageUri}}" alt="{{Name}}" border="0"></a>
+        </div>
+        <div class="right-section">
+            <a href="{{getPathCenter this}}" class="internalLink">
+                <h2>{{Title}}</h2>
+            </a>
+            <div class="blurb">{{Description}}</div>
+            <ul>
+                {{#each Items}}
+                {{#shouldDisplayTopic Title}}
+                {{#ifLessThan @index 2}}
+                <li><a href="{{getFullTopicPath ../../../CategorySlug ../../../CollectionSlug ../../Slug}}" class="internalLink">{{../../Title}}</a></li>
+                {{/ifLessThan}}
+                {{/shouldDisplayTopic}}
+                {{/each}}
+            </ul>
+            {{#ifGreaterThan Items.length 2}}
+            <a href="{{getCenterPath ../CategorySlug ../CollectionSlug}}" class="internalLink">See All</a>
+            {{/ifGreaterThan}}
+        </div>
+    </div>
+</div>

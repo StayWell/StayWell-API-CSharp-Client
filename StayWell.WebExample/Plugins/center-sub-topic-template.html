@@ -1,0 +1,44 @@
+﻿<div class="row center-feature">
+    {{#ifElseBlank ImageUri}}{{else}}<div class="col-lg-3"><img src="{{../ImageUri}}" alt="{{../Title}}" class="center-feature-image" /></div>{{/ifElseBlank}}
+    <div class="{{#ifElseBlank ImageUri}}col-lg-8{{else}}col-lg-5{{/ifElseBlank}}">
+        <h3>{{Title}}</h3>
+        <p>
+            {{Description}}
+        </p>
+    </div>
+    <div class="col-lg-4 column">
+        {{#each Highlights}}
+        {{#if @first}}
+        <h2>Daily Highlight</h2>
+        <ul>
+            {{/if}}
+            <li>{{> contentThumbnailSmallTemplate}}</li>
+            {{#if @last}}
+        </ul>
+        {{/if}}
+        {{/each}}
+    </div>
+</div>
+<div class="row center-topic">
+    {{#ifGreaterThan Topics.length 0}}
+    <div class="col-lg-6">
+        <h4>Explore Topics:</h4>
+        <ul>
+            {{#each ../Topics}}
+            <li><a href="{{getTopicPath Slug}}" class="internalLink">{{Title}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/ifGreaterThan}}
+    <div class="col-lg-6">
+        <h4>Explore Articles:</h4>
+        <ul>
+            {{#each Articles}}
+            <li><a href="{{getContentPath Bucket.Slug Slug}}">{{Title}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+<div id="MoreResourcesContainer">
+</div>
+<br /><br />

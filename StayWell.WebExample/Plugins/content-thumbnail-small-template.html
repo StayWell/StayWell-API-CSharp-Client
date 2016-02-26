@@ -1,0 +1,19 @@
+﻿
+<div class="content-thumbnail-small">
+    {{#ifElseBlank ImageUri}}
+    <a href="{{getContentPath ../Bucket.Slug ../Slug}}">
+        {{#ifEqualTo ../TypeName "Quizzes"}}<span class="glyphicon glyphicon-question-sign"></span> {{/ifEqualTo}}
+        {{#ifEqualTo ../TypeName "Assessments"}}<span class="glyphicon glyphicon-question-sign"></span> {{/ifEqualTo}}
+        {{#ifEqualTo ../TypeName "Calculators"}}<span class="glyphicon glyphicon-list-alt"></span> {{/ifEqualTo}}
+        {{#ifEqualTo ../TypeName "Podcasts"}}<span class="glyphicon glyphicon-play-circle"></span> {{/ifEqualTo}}
+        {{../Title}}
+    </a>
+    {{else}}
+    <a href="{{getContentPath ../Bucket.Slug ../Slug}}" data-bucketslug="{{../Bucket.Slug}}" data-slug="{{../Slug}}">
+        <span class="media-link">
+            <img alt="{{../Title}}" title="{{../Title}}" class="img-responsive" src="{{../ImageUri}}" style="display: block;"><span class="media-icon"><span class="glyphicon glyphicon-play"> {{../Duration}}</span></span>
+        </span>
+        {{../Title}}
+    </a>
+    {{/ifElseBlank}}
+</div>

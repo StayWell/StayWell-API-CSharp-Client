@@ -17,6 +17,8 @@ namespace StayWell.WebExample.Models
         public List<Bucket> Buckets { get; set; }
         [XmlArray]
         public List<ServiceLine> ServiceLines { get; set; }
+        [XmlArray]
+        public List<Collection> Collections { get; set; }
     }
     [Serializable]
     public class Name
@@ -37,5 +39,13 @@ namespace StayWell.WebExample.Models
     {
         [XmlAttribute("Slug")]
         public string Slug { get; set; }
+    }
+    [Serializable]
+    public class Collection
+    {
+        [XmlAttribute("Slug")]
+        public string Slug { get; set; }
+         [XmlAttribute("Name")]
+        public string Name { get; set; }
     }
 }

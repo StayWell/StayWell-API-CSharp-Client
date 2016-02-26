@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace StayWell.WebExample.Api
 {
-    public class ContentController : ApiController
+    public class ContentSearchController : ApiController
     {
         private ApiClient _client = StayWellAPIClientFactory.GetApiClient();
 

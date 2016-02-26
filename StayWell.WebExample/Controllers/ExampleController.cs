@@ -118,7 +118,12 @@ namespace StayWell.WebExample.Controllers
             return View();
         }
 
-        public ActionResult Centers()
+        public ActionResult CenterPlugin()
+        {
+            return View();
+        }
+
+        public ActionResult Centers(string centerCategorySlug)
         {
             return View();
         }
@@ -128,7 +133,7 @@ namespace StayWell.WebExample.Controllers
             return View();
         }
 
-        public ActionResult AtoZ()
+        public ActionResult AtoZPlugin()
         {
             return View();
         }

@@ -1,0 +1,104 @@
+﻿
+<div class="row center-feature">
+    <div class="col-lg-4"><img src="{{ImageUri}}" alt="{{Title}}" class="center-feature-image" /></div>
+    <div class="col-lg-4">
+        <h1>{{Title}}</h1>
+        <p>
+            {{Description}}
+        </p>
+    </div>
+    <div class="col-lg-4 column">
+        <h2>Getting Started</h2>
+        <ul>
+            {{#each GettingStarted}}
+            <li>
+                <a href="{{getContentPath Bucket.Slug Slug}}">{{Title}}</a>
+            </li>
+            {{/each}}
+        </ul>
+        <br />
+        <h2>Daily Highlight</h2>
+        {{#each Highlights}}
+        <ul>
+            <li>{{> contentThumbnailSmallTemplate}}</li>
+        </ul>
+        {{/each}}
+    </div>
+</div>
+    {{#each Topics}}
+    {{#shouldDisplayTopic Title}}
+<div class="row center-topic">
+    <div class="col-sm-3">
+        <a href="{{getTopicPath ../Slug}}" class="internalLink"><img src="{{../ImageUri}}" class="center-topic-image" alt="{{Title}}" /></a>
+    </div>
+    <div class="col-sm-9">
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{{getTopicPath ../Slug}}" class="internalLink"><h4>{{../Title}}</h4></a>
+                {{../Description}}
+            </div>
+            {{#ifGreaterThan ../Topics.length 0}}
+            <div class="col-sm-4">
+                Explore Topics
+                <ul>
+                    {{#each ../../Topics}}
+                    {{#ifLessThan @index 5}}
+                    <li><a href="{{getPath ../../../../Slug ../Slug}}" class="internalLink">{{../Title}}</a></li>
+                    {{/ifLessThan}}
+                    {{/each}}
+                </ul>
+                {{#ifGreaterThan ../../Topics.length 4}}
+                <a href="{{getTopicPath ../../../Slug}}" class="internalLink">See all Topics</a>
+                {{/ifGreaterThan}}
+            </div>
+            <div class="col-sm-4">
+                Explore Articles
+                <ul>
+                    {{#each ../../Articles}}
+                    {{#ifLessThan @index 5}}
+                    <li><a href="{{getContentPath ../Bucket.Slug ../Slug}}">{{../Title}}</a></li>
+                    {{/ifLessThan}}
+                    {{/each}}
+                </ul>
+                {{#ifGreaterThan Topics.length 4}}
+                <a href="{{getTopicPath ../../../Slug}}" class="internalLink">See all Articles</a>
+                {{/ifGreaterThan}}
+            </div>
+            {{else}}
+            {{#each ../../Articles}}
+            {{#ifLessThan @index 10}}
+            {{#moduloIf @index 5}}
+            <div class="col-sm-4">
+                {{#if @first}}Explore Articles{{else}}&nbsp;{{/if}}
+                <ul>
+                    {{/moduloIf}}
+                    <li><a href="{{getContentPath ../Bucket.Slug ../Slug}}">{{../Title}}</a></li>
+                    {{#moduloIfLast @index @last 5}}
+                </ul>
+                {{#ifEqualTo @index 9}}
+                <a href="{{getTopicPath ../../../../../../Slug}}" class="internalLink">See all Articles</a>
+                {{/ifEqualTo}}
+            </div>
+            {{/moduloIfLast}}
+            {{/ifLessThan}}
+
+            {{/each}}
+            {{/ifGreaterThan}}
+        </div>
+        {{#ifGreaterThan ../Highlights.length 0}}
+        <hr />
+        <div class="row">
+            {{#each ../../Highlights}}
+            <div class="col-sm-4">
+                {{> contentThumbnailSmallTemplate }}
+            </div>
+            {{/each}}
+        </div>
+        {{/ifGreaterThan}}
+    </div>
+</div>
+    {{/shouldDisplayTopic}}
+    {{/each}}
+<div id="MoreResourcesContainer">
+</div>
+<br /><br />

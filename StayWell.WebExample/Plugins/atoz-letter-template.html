@@ -1,0 +1,12 @@
+﻿<ul>
+    <li>
+        <span class="letter">{{Letter}}</span>
+        <ul class="listing">
+            {{#each Items}}
+            <li><a href="{{getContentPath Bucket.Slug Slug}}" class="sw-content-link">{{Title}}</a></li>
+            {{else}}
+            <li>No content to display.</li>
+            {{/each}}
+        </ul>
+    </li>
+</ul>

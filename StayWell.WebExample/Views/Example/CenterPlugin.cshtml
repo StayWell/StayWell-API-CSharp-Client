@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Centers";
+}
+
+<div class="section-header">
+    <h1>Health Centers Plugin</h1>
+</div>
+
+<div class="staywell-centers"></div>
+
+@section scripts {
+    <link href="/Plugins/Plugins.css" rel="stylesheet" />
+    <link href="/Content/FlowplayerSkins/functional.css" rel="stylesheet" />
+    <script language=" javascript" src="/Scripts/flowplayer.js"></script>
+    <script language="javascript" src="/ContentConfig/CenterCategories.js"></script>
+    <script language="javascript" src="/Plugins/plugins.centers.js"></script>
+    <script language="javascript" src="/Plugins/plugins.sdk.js"></script>
+    <script type="text/javascript" language="javascript">
+        window.History = { options: { delayInit: true } };
+    </script>
+    <script language="javascript" src="/Scripts/jquery.history.js"></script>
+    <script language="javascript">
+        $(document).ready(function () {
+            PluginSDK.Initialize("339fc3f3-013b-4781-84f8-a4dc00462976");
+        });
+    </script>
+}

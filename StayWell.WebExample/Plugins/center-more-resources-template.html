@@ -1,0 +1,42 @@
+﻿    {{#ifGreaterThan Items.length 0}}
+<div class="row" id="MoreResourcesSection" data-currentfilter="All" data-isexpanded="false">
+    <div class="col-sm-12 sub-section more-resources">
+        <h2>Interactive Content ({{../Items.length}})</h2>
+        <div class="row block-display">
+            <!-- Build the Interactive Content Menu-->
+            <div class="panel col-xs-3 block-panel">
+                <div class="inner-block-menu">
+                    <div class="block-top block-menu">
+                        <h3>Filter Interactive Content</h3>
+                        <ul>
+                            {{#each ../Menu}}
+                            <li><a class="clickable-link interactive-filter" data-interactivetype="{{Title}}">{{Title}} ({{Count}})</a></li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display all interactive content -->
+            {{#each ../Items}}
+            <div class="panel col-xs-3 block-panel interactive-item {{#ifGreaterThan @index 6}}hidden-initial{{/ifGreaterThan}}" data-interactivetype="{{TypeName}}">
+                <div class="inner-block">
+                    <div class="block-top">
+                        {{> contentThumbnailTemplate }}
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+    {{#ifGreaterThan ../Items.length 7}}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="center">
+            <a class="show-all-button clickable-link more-resources-show-all"><span class="glyphicon glyphicon-chevron-down"></span> Show All Interactive Content <span class="glyphicon glyphicon-chevron-down"></span></a>
+        </div>
+    </div>
+</div>
+    {{/ifGreaterThan}}
+    {{/ifGreaterThan}}

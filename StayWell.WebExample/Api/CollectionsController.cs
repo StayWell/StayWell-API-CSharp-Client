@@ -22,7 +22,14 @@ namespace StayWell.WebExample.Api
         {
             //Execute the query
             CollectionResponse collection = _client.Collections.GetCollection(collectionSlug, true, true, true);
+            return collection;
+        }
 
+        [Route("api/collectionslite/{collectionSlug}")]
+        public CollectionResponse GetLite(string collectionSlug)
+        {
+            //Execute the query
+            CollectionResponse collection = _client.Collections.GetCollection(collectionSlug, true, false, false);
             return collection;
         }
     }

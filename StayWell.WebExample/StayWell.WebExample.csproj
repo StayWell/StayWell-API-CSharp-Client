@@ -127,8 +127,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\CollectionsController.cs" />
+    <Compile Include="Api\StreamingMediaController.cs" />
     <Compile Include="Api\ContentSearchController.cs" />
-    <Compile Include="Api\ContentControlle.cs" />
+    <Compile Include="Api\ContentController.cs" />
     <Compile Include="App_Code\ApiClientExtension.cs" />
     <Compile Include="App_Code\ContentCategoryFactory.cs" />
     <Compile Include="App_Code\ContentLinkConverter.cs" />
@@ -207,13 +208,35 @@
     <Content Include="Images\ajax-loader-horizontal-lite.gif" />
     <Content Include="Images\ajax-loader-indicator-lite.gif" />
     <Content Include="Images\imagePlaceholder.png" />
+    <Content Include="Plugins\atoz-loading-template.html" />
+    <Content Include="Plugins\atoz-letter-template.html" />
+    <Content Include="Plugins\atoz-listing-placeholder-template.html" />
+    <Content Include="Plugins\atoz-listing-template.html" />
+    <Content Include="Plugins\atoz-initialization-template.html" />
+    <Content Include="Plugins\content-template.html" />
+    <Content Include="Plugins\center-listing-template.html" />
+    <Content Include="Plugins\center-blurb-template.html" />
+    <Content Include="Plugins\center-template.html" />
+    <Content Include="Plugins\content-thumbnail-small-template.html" />
+    <Content Include="Plugins\center-more-resources-template.html" />
+    <Content Include="Plugins\content-thumbnail-template.html" />
+    <Content Include="Plugins\plugins.atoz.js" />
+    <Content Include="Plugins\plugins.content.js" />
+    <Content Include="Plugins\center-sub-topic-template.html" />
+    <Content Include="Plugins\Plugins.css" />
+    <Content Include="Plugins\plugins.sdk.js" />
+    <Content Include="Plugins\PluginTest.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\FlowplayerSkins\fonts\fpicons.eot" />
     <Content Include="Content\FlowplayerSkins\fonts\fpicons.ttf" />
     <Content Include="Content\FlowplayerSkins\fonts\fpicons.woff" />
-    <Content Include="ContentConfig\RelatedServicesCategories.config" />
+    <Content Include="ContentConfig\RelatedServicesCategories.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="ContentConfig\VideoLibraryCategories.config" />
+    <Content Include="ContentConfig\CenterCategories.js" />
+    <Content Include="Plugins\plugins.handlebarhelpers" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\flowplayer.js" />
     <Content Include="Scripts\handlebars-v3.0.3.js" />
@@ -223,6 +246,8 @@
     <Content Include="Scripts\jquery.mixitup.js" />
     <Content Include="Scripts\JSONP.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Plugins\plugins.centers.js" />
+    <Content Include="Scripts\require.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -266,8 +291,9 @@
     <Content Include="Views\License\DisplayServiceLines.cshtml" />
     <Content Include="Views\License\_PublicDemoWarningMessage.cshtml" />
     <Content Include="Views\Example\TopicExplorer.cshtml" />
-    <Content Include="Views\Example\AtoZ.cshtml" />
     <Content Include="Views\HowTo\SearchByPublishedDate.cshtml" />
+    <Content Include="Views\Example\CenterPlugin.cshtml" />
+    <Content Include="Views\Example\AtoZPlugin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StayWell.ClientFramework\StayWell.ClientFramework.csproj">
@@ -308,7 +334,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1100</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -38,6 +38,12 @@ namespace StayWell.WebExample
            );
 
             routes.MapRoute(
+              name: "Centers",
+              url: "Centers/{*folderPath}",
+              defaults: new { controller = "Example", action = "Centers" }
+          );
+
+            routes.MapRoute(
                name: "Content",
                url: "Content/{bucketSlug}/{contentSlug}",
                defaults: new { controller = "Example", action = "Index", id = UrlParameter.Optional }
