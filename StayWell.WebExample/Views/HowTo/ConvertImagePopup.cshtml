@@ -1,0 +1,48 @@
+﻿@using StayWell.ServiceDefinitions.Content.Objects
+
+<script>
+var window = '';
+
+function InitPopup(url, features) {
+	//checks to see if the popup is already open, if so, close
+	if (!window.closed && window.location) {
+		window.close();
+	}
+
+	window = window.open(url, 'mypopup', features);
+	if (!window.opener) window.opener = self;
+	if (window.closed) alert("It appears the page you requested is being blocked by pop-up blocking software.\nPlease disable any pop-up blockers to view the page.");
+
+	window.focus();
+
+	return false;
+}
+</script>
+
+@model ContentArticleResponse
+@{
+	ViewBag.Title = Model.Title;
+}
+<div class="section-header">
+	<h1>How To: Convert an Image Popup</h1>
+</div>
+<h2>@Model.Title</h2>
+@foreach (ContentSegmentResponse segment in Model.Segments)
+{
+	<!--
+		Some articles will customize the segment name to make them more specific.  In order to leverage these specific names
+		you should display the custom name if it is not null or empty
+	-->
+
+	if (String.IsNullOrEmpty(segment.CustomName))
+	{
+		<h3>@segment.Name</h3>
+	}
+	else
+	{
+		<h3>@segment.CustomName</h3>
+	}
+
+	<p>@Html.Raw(segment.Body)</p>
+}
+

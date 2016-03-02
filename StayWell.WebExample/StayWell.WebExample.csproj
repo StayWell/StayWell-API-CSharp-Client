@@ -294,6 +294,7 @@
     <Content Include="Views\HowTo\SearchByPublishedDate.cshtml" />
     <Content Include="Views\Example\CenterPlugin.cshtml" />
     <Content Include="Views\Example\AtoZPlugin.cshtml" />
+    <Content Include="Views\HowTo\ConvertImagePopup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StayWell.ClientFramework\StayWell.ClientFramework.csproj">
