@@ -2,8 +2,8 @@
 {
 	public enum ContentOriginType
 	{
-		None,
-		Ksw,
-		Other
+		None = 0,
+		StayWell = 1,
+		Other = 2
 	}
 }

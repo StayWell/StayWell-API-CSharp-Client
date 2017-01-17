@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using StayWell.ServiceDefinitions.Buckets.Objects;
+using StayWell.ServiceDefinitions.Content.Interfaces;
 
 namespace StayWell.ServiceDefinitions.Content.Objects
 {
 	[XmlType("Content")]
-	public class ContentMetadataResponse : ContentBase
+	public class ContentMetadataResponse : ContentBase, IContentMetaDataBaseResponse
 	{
 		public Guid Id { get; set; }
 
@@ -49,6 +50,9 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 
 		public List<CustomAttribute> CustomAttributes { get; set; }
 
+		[XmlArrayItem("Keyword")]
+		public List<string> Keywords { get; set; }
+
 		public string LegacyId { get; set; }
 
 		public bool Published { get; set; }
@@ -58,5 +62,9 @@ namespace StayWell.ServiceDefinitions.Content.Objects
         public bool IsCustom { get; set; }
 
         public bool IsClientOwned { get; set; }
+
+		public double Rating { get; set; }
+		public long RatingsCount { get; set; }
+		public long ViewCount { get; set; }
 	}
 }

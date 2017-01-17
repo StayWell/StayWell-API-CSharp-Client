@@ -34,8 +34,9 @@ namespace StayWell.WebExample.App_Code.Mappers
             {
                 StreamingMediaResponse media = _client.StreamingMedia.GetStreamingMedia(source.Bucket.Slug, source.Slug, new GetContentOptions
                 {
-                    IncludeBody = true
-                }, true);
+                    IncludeBody = true,
+                    EditMode = true
+                });
 
 
                 int seconds = media.Formats.First().RunningTime % 60;

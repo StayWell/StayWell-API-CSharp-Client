@@ -72,9 +72,9 @@ namespace StayWell.ClientFramework.Helpers
 				else
 					builder.Append('&');
 
-				builder.Append(HttpUtility.UrlEncode(key));
+				builder.Append(Uri.EscapeDataString(key));
 				builder.Append('=');
-				builder.Append(HttpUtility.UrlEncode(parameters[key]));
+				builder.Append(Uri.EscapeDataString(parameters[key] ?? string.Empty));
 			}
 
 			return builder.ToString();
@@ -93,9 +93,9 @@ namespace StayWell.ClientFramework.Helpers
 				else
 					builder.Append('&');
 
-				builder.Append(HttpUtility.UrlEncode(key));
+				builder.Append(Uri.EscapeDataString(key));
 				builder.Append('=');
-				builder.Append(HttpUtility.UrlEncode(parameters[key]));
+				builder.Append(Uri.EscapeDataString(parameters[key]));
 			}
 
 			return builder.ToString();

@@ -152,7 +152,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryModel.cs" />
-    <Compile Include="Models\ContentReferneceModel.cs" />
+    <Compile Include="Models\ContentReferenceModel.cs" />
     <Compile Include="Models\ContentWithRelationshipModel.cs" />
     <Compile Include="Models\GroupedContentModel.cs" />
     <Compile Include="Models\GroupedServiceLineModel.cs" />

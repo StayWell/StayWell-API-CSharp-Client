@@ -26,9 +26,9 @@ namespace StayWell.WebExample.Api
             {
                 streamingMedia = _client.StreamingMedia.GetStreamingMedia(bucketSlug, contentSlug, new GetContentOptions
                 {
-                     IncludeBody = true
-                },
-                true);
+                     IncludeBody = true,
+                     EditMode = true
+                });
             }
             catch (ServiceException ex)
             {

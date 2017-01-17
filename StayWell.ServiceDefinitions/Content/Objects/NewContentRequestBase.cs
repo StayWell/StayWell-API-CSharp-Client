@@ -1,10 +1,11 @@
 ﻿using System.Xml.Serialization;
+using StayWell.ServiceDefinitions.Content.Interfaces;
 
 namespace StayWell.ServiceDefinitions.Content.Objects
 {
     // TODO: fix naming...
     [XmlType("Content")]
-    public class NewContentRequestBase : ContentArticleRequest
+	public class NewContentRequestBase : ContentArticleRequest, IContentCreateRequest
     {
         public string MasterId { get; set; }
 

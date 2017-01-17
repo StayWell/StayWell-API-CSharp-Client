@@ -7,6 +7,7 @@
 		Text = 2,
 		Image = 3,
 		StreamingMedia = 4,
-		Binary = 5
+		Binary = 5,
+		ClientPage = 6
 	}
 }

@@ -3,11 +3,10 @@
 	public enum SearchType
 	{
 		None,
-        Binary,
-        Bucket, // TODO: remove Bucket?
 		Content,
 		Image,
-        StreamingMedia,
-        Text,
+		//Collection,
+		// Bucket, // TODO: remove Bucket?
+		Binary
 	}
 }

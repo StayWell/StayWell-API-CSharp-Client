@@ -55,6 +55,7 @@
     <Compile Include="ErrorData.cs" />
     <Compile Include="ErrorResponse.cs" />
     <Compile Include="ExceptionResultType.cs" />
+    <Compile Include="IServiceHook.cs" />
     <Compile Include="OAuthErrorCode.cs" />
     <Compile Include="OAuthException.cs" />
     <Compile Include="OperationReturnModifier.cs" />
@@ -64,9 +65,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultList.cs" />
     <Compile Include="ServiceException.cs" />
+    <Compile Include="ServiceHookAttribute.cs" />
+    <Compile Include="ServiceHookOptionAttribute.cs" />
     <Compile Include="ServiceRedirectException.cs" />
     <Compile Include="SlugResponse.cs" />
     <Compile Include="SortDirection.cs" />
+    <Compile Include="SpecialAccessModifier.cs" />
     <Compile Include="StreamRequest.cs" />
     <Compile Include="StreamResponse.cs" />
     <Compile Include="UseType.cs" />

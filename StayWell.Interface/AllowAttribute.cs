@@ -6,7 +6,8 @@ namespace StayWell.Interface
 	{
 		public AllowAttribute()
 		{
-			Logging = AllowedLogging.Log;
+			// default to not logging, only log explicitly specified logging
+			Logging = AllowedLogging.NeverLog;
 			Documentation = true;
 		}
 
@@ -15,6 +16,7 @@ namespace StayWell.Interface
 		public AllowedLogging Logging { get; set; }
 		public AllowedSpecialAccess SpecialAccess { get; set; }
 		public bool Documentation { get; set; }
+		public bool AllowDuringInitialization { get; set; }
 
 		public OperationReturnModifier ReturnModifier { get; set; }
 

@@ -7,5 +7,6 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 	public class ContentList : PagedResultList<ContentResponse>
 	{
 		public TypeCount TypeCounts { get; set; }
+		public bool IncludeBlockedContent { get; set; }
 	}
 }

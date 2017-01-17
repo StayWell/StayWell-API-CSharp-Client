@@ -33,5 +33,9 @@ namespace StayWell.ServiceDefinitions.Collections
 		[WebInvoke(UriTemplate = "Slugs", Method = "GET")]
 		[Allow(ClientType = ClientType.Internal, Rights = "Read_Content", SpecialAccess = AllowedSpecialAccess.Jsonp, Logging = AllowedLogging.NeverLog)]
 		SlugResponse GetSlug(string title, string slug);
+
+		[WebInvoke(UriTemplate = "Legacy/{legacyId}", Method = "GET")]
+		[Allow(ClientType = ClientType.Internal, Rights = "Read_Content", SpecialAccess = AllowedSpecialAccess.Jsonp)]
+		CollectionResponse GetLegacyCollection(string legacyId, bool? includeChildren, bool? recursive, bool? includeContent);
 	}
 }

@@ -83,12 +83,17 @@ namespace StayWell.ServiceDefinitions.Mapping
 		[WebInvoke(UriTemplate = "/MappingModule/{licenseId}/{mappingType}/Mappings/All/Unpublished", Method = "PUT")]
 		[OperationContract]
 		[Allow(ClientType = ClientType.Internal, Rights = "Manage_Mapping")]
-		UnpublishedChangeResponse UnpublishAllMappings(Guid licenseId, string mappingType);
+        UnpublishedChangeResponse UnpublishAllMappings(Guid licenseId, string mappingType);
 
-		[WebInvoke(UriTemplate = "/MappingModule/{licenseId}/{mappingType}/Mappings/File", Method = "POST")]
-		[OperationContract]
-		[Allow(ClientType = ClientType.Internal, Rights = "Manage_Mapping")]
-		UploadResponse UploadMappings(Guid licenseId, string mappingType, StreamRequest request);
+        [WebInvoke(UriTemplate = "/MappingModule/{licenseId}/{mappingType}/Mappings/File", Method = "POST")]
+        [OperationContract]
+        [Allow(ClientType = ClientType.Internal, Rights = "Manage_Mapping")]
+        UploadResponse UploadMappings(Guid licenseId, string mappingType, StreamRequest request);
+
+	    [WebInvoke(UriTemplate = "/MappingModule/{licenseId}/{mappingType}/Mappings/FileUpdate/{id}", Method = "PUT")]
+	    [OperationContract]
+	    [Allow(ClientType = ClientType.Internal, Rights = "Manage_Mapping")]
+	    UploadResponse UpdateAndUploadMappings(Guid licenseId, string mappingType, Guid id, StreamRequest request);
 
 		[WebInvoke(UriTemplate = "/MappingModule/{licenseId}/{mappingType}/ServiceLines/{audienceSlug}/{serviceLineSlug}/{pageKeywordSlug}/Mappings", Method = "GET")]
 		[OperationContract]
@@ -110,12 +115,12 @@ namespace StayWell.ServiceDefinitions.Mapping
 		[Allow(ClientType = ClientType.Internal, Rights = "Read_Mapping", SpecialAccess = AllowedSpecialAccess.Jsonp)]
 		ServiceLineMappingResponseList GetServiceLineMappings(string mappingType, string audienceSlug, string serviceLineSlug, bool includeUnpublished = false);
 
-		[WebInvoke(UriTemplate = "Mapping/ServiceLineReport", Method = "GET")]
+		[WebInvoke(UriTemplate = "/Reports/Mapping/ServiceLineReport", Method = "GET")]
 		[OperationContract]
 		[Allow(ClientType = ClientType.Internal, Rights = "Read_Mapping")]
 		MappingServiceLineReport GetReport(MappingServiceLineReportRequest request);
 
-		[WebInvoke(UriTemplate = "Mapping/ServiceLineReportExport.xlsx", Method = "GET")]
+		[WebInvoke(UriTemplate = "/Reports/Mapping/ServiceLineReportExport.xlsx", Method = "GET")]
 		[OperationContract]
 		[Allow(ClientType = ClientType.Internal, Rights = "Read_Mapping")]
 		StreamResponse GetReportExport(MappingServiceLineExportRequest request);

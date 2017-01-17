@@ -19,6 +19,7 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		public string Slug { get; set; }
 		public string Blurb { get; set; }
 		public ContentType Type { get; set; }
+        public bool IsBlocked { get; set; }
 		public string Copyright { get; set; }
 		public ContentBucketReference Bucket { get; set; }
 		public string OriginName { get; set; }
@@ -78,7 +79,11 @@ namespace StayWell.ServiceDefinitions.Content.Objects
         public string ImageUri { get; set; }
         public string Transcript { get; set; }
         public string ClosedCaptioning { get; set; }
+
         [XmlArrayItem("Format")]
         public List<StreamingMediaFormat> StreamingMediaFormats { get; set; }
+
+		[XmlArrayItem("Keyword")]
+		public List<string> Keywords { get; set; }
 	}
 }

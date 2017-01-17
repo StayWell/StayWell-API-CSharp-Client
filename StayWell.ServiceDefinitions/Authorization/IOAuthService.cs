@@ -9,15 +9,15 @@ namespace StayWell.ServiceDefinitions.Authorization
 	public interface IOAuthService
 	{
 		[WebInvoke(UriTemplate = "TokenEndpoint", Method = "POST")]
-		[Allow(ClientType = ClientType.Public, Logging = AllowedLogging.LogWithoutBody)]
+		[Allow(ClientType = ClientType.Public, Logging = AllowedLogging.NeverLog)]
 		OAuthTokenResponse CreateAccessToken(OAuthTokenRequest request);
 
 		[WebInvoke(UriTemplate = "ApplicationGrants", Method = "POST")]
-		[Allow(ClientType = ClientType.Internal, Logging = AllowedLogging.LogWithoutBody)]
+		[Allow(ClientType = ClientType.Internal, Logging = AllowedLogging.NeverLog)]
 		AuthorizationGrantResponse CreateApplicationAuthorizationGrant(ApplicationAuthorizationGrantRequest request);
 
 		[WebInvoke(UriTemplate = "UserGrants", Method = "POST")]
-		[Allow(ClientType = ClientType.Internal, Logging = AllowedLogging.LogWithoutBody)]
+		[Allow(ClientType = ClientType.Internal, Logging = AllowedLogging.NeverLog)]
 		AuthorizationGrantResponse CreateUserAuthorizationGrant(UserAuthorizationRequest request);
 	}
 }

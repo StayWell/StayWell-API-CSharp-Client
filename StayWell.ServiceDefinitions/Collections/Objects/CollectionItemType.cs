@@ -6,6 +6,7 @@
 		Collection,
 		Topic,
 		Content,
-		Sort
+        DynamicTopic
     }
 }
+	

@@ -10,7 +10,7 @@ namespace StayWell.ServiceDefinitions.Content
 	{
 		[WebInvoke(UriTemplate = "{bucketIdOrSlug}/{idOrSlug}", Method = "GET")]
 		[Allow(ClientType = ClientType.Internal, Rights = "Read_Content", SpecialAccess = AllowedSpecialAccess.Jsonp)]
-		StreamingMediaResponse GetStreamingMedia(string bucketIdOrSlug, string idOrSlug, GetContentOptions options, bool editMode);
+		StreamingMediaResponse GetStreamingMedia(string bucketIdOrSlug, string idOrSlug, GetContentOptions options);
 
 		// publicly accessible using license id
 		[WebInvoke(UriTemplate = "Captions/{licenseId}/{bucketIdOrSlug}/{idOrSlug}", Method = "GET")]

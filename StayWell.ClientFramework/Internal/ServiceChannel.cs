@@ -109,9 +109,9 @@ namespace StayWell.ClientFramework.Internal
 				else
 					builder.Append('&');
 
-				builder.Append(HttpUtility.UrlEncode(key));
+				builder.Append(Uri.EscapeDataString(key));
 				builder.Append('=');
-				builder.Append(HttpUtility.UrlEncode(formParameters[key]));
+				builder.Append(Uri.EscapeDataString(formParameters[key] ?? string.Empty));
 			}
 
 			byte[] bytes = Encoding.UTF8.GetBytes(builder.ToString());

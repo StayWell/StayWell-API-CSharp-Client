@@ -268,7 +268,7 @@ namespace StayWell.ClientFramework.Internal
 
 				if (uriTemplate.Contains(inlineParameter))
 				{
-					uriTemplate = uriTemplate.Replace(inlineParameter, HttpUtility.UrlEncode(value));
+					uriTemplate = uriTemplate.Replace(inlineParameter, Uri.EscapeDataString(value ?? string.Empty));
 					parameters.Remove(name);
 				}
 			}

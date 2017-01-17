@@ -13,9 +13,5 @@ namespace StayWell.ServiceDefinitions.Content.Objects
         public string ClosedCaptioning { get; set; }
         [XmlArrayItem("Format")]
         public List<StreamingMediaFormatResponse> Formats { get; set; }
-
-        public decimal Rating { get; set; }
-        public long RatingsCount { get; set; }
-        public long ViewCount { get; set; }
-    }
+	}
 }

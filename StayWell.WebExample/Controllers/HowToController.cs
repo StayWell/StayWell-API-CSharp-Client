@@ -55,8 +55,9 @@ namespace StayWell.WebExample.Controllers
 			//Request the specific article.  If you intend to display the full article you must send the flag "IncludeBody"
 			StreamingMediaResponse video = _client.StreamingMedia.GetStreamingMedia("videos-v2", "carpal-tunnel-syndrome", new GetContentOptions
 			{
-				IncludeBody = true
-			}, false);
+				IncludeBody = true,
+				EditMode = false
+			});
 
 			return View(video);
 		}
