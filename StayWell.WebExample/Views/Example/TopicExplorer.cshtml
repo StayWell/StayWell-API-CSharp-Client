@@ -156,7 +156,9 @@
                 var item = topicList.Items[i];
 
                 //If the topic doesn't contain a topic index page then leave it off the final list.
+                //Not all Collection Topics contain a Topic Index page. In this example we are parsing the items in the Topic for a link to view each topic index.
                 var topicIndexPage = GetTopicIndexPage(item);
+                //We are setting up letters of the alphabet for display purposes
                 if (topicIndexPage!=null) {
                     var currentLetter = item.Title.charAt(0);
 
@@ -172,6 +174,7 @@
             return displayTopicList;
         }
 
+        //Loop through the items in the topic to see if one starts with the word "topic" meaning it is the Topic Index
         function GetTopicIndexPage(subTopicList) {
             
             var searchString = "topic";
@@ -187,6 +190,7 @@
             return null;
         }
 
+        //used for sorting the titles in the alphabetical order
         function CompareTitle(a, b) {
             if (a.Title < b.Title)
                 return -1;

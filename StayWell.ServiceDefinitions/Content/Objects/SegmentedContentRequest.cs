@@ -11,6 +11,7 @@ namespace StayWell.ServiceDefinitions.Content.Objects
         public List<ContentSegmentRequest> Segments { get; set; }
 
         public string Title { get; set; }
+		public string NativeLanguageTitle { get; set; }
         public string InvertedTitle { get; set; }
 
         [XmlArrayItem("AlternateTitle")]
@@ -30,5 +31,8 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		public List<string> Keywords { get; set; }
 
         public bool Publish { get; set; }
-    }
+
+
+		public int? AuditUserId { get; set; }
+	}
 }

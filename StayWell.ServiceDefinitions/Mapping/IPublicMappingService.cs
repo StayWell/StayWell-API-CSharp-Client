@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using StayWell.Interface;
@@ -115,7 +116,12 @@ namespace StayWell.ServiceDefinitions.Mapping
 		[Allow(ClientType = ClientType.Internal, Rights = "Read_Mapping", SpecialAccess = AllowedSpecialAccess.Jsonp)]
 		ServiceLineMappingResponseList GetServiceLineMappings(string mappingType, string audienceSlug, string serviceLineSlug, bool includeUnpublished = false);
 
-		[WebInvoke(UriTemplate = "/Reports/Mapping/ServiceLineReport", Method = "GET")]
+        [WebInvoke(UriTemplate = "/MappingModule/ServiceLines/Mappings", Method = "GET")]
+        [OperationContract]
+        [Allow(ClientType = ClientType.Internal, Rights = "Read_Mapping", SpecialAccess = AllowedSpecialAccess.Jsonp)]
+	    List<ServiceLineMappingResponseList> GetServiceLineMappings(ServiceLineMappingsBulkRequest request);
+
+        [WebInvoke(UriTemplate = "/Reports/Mapping/ServiceLineReport", Method = "GET")]
 		[OperationContract]
 		[Allow(ClientType = ClientType.Internal, Rights = "Read_Mapping")]
 		MappingServiceLineReport GetReport(MappingServiceLineReportRequest request);

@@ -11,22 +11,27 @@ namespace StayWell.ServiceDefinitions.ServiceLines
 	{
 		[WebInvoke(UriTemplate = "", Method = "GET")]
 		[Allow(ClientType = ClientType.Public, SpecialAccess = AllowedSpecialAccess.Jsonp)]
+		[Document("Search service lines")]
 		PagedServiceLineResponseList SearchServiceLines(PagedServiceLineSearchRequest request);
 
 		[WebInvoke(UriTemplate = "Hierarchy", Method = "GET")]
 		[Allow(ClientType = ClientType.Public, SpecialAccess = AllowedSpecialAccess.Jsonp)]
+		[Document("Search service lines and return the results as a hierarchy")]
 		ServiceLineHierarchy SearchServiceLines(ServiceLineSearchRequest request);
 
 		[WebInvoke(UriTemplate = "Audiences", Method = "GET")]
 		[Allow(ClientType = ClientType.Public, SpecialAccess = AllowedSpecialAccess.Jsonp)]
+		[Document("Get all service line audiences")]
 		ServiceLineResponseList GetAllAudiences();
 
 		[WebInvoke(UriTemplate = "Audiences/{audienceSlug}", Method = "GET")]
 		[Allow(ClientType = ClientType.Public, SpecialAccess = AllowedSpecialAccess.Jsonp)]
+		[Document("Get all service lines in a specific audience")]
 		ServiceLineResponseList GetServiceLinesInAudience(string audienceSlug);
 
 		[WebInvoke(UriTemplate = "Audiences/{audienceSlug}/{serviceLineSlug}", Method = "GET")]
 		[Allow(ClientType = ClientType.Public, SpecialAccess = AllowedSpecialAccess.Jsonp)]
+		[Document("Get all keywords in a specific service line")]
 		ServiceLineResponseList GetKeywordsInServiceLine(string audienceSlug, string serviceLineSlug);
 
 		[WebInvoke(UriTemplate = "Audiences/{audienceSlug}", Method = "POST")]

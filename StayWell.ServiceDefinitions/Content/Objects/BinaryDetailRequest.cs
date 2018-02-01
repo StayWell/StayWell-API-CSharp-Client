@@ -16,7 +16,6 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		public Guid? LicenseId { get; set; }
 		public DateTime? LastReviewedDate { get; set; }
 		public DateTime? PostingDate { get; set; }
-		
 
 		// from SegmentedContentRequest
 		public List<ContentTaxonomyListRequest> Taxonomies { get; set; }
@@ -25,30 +24,23 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		public List<string> Keywords { get; set; }
 		public bool Publish { get; set; } //?
 
-
-		// original
 		public string Title { get; set; }
-		
 		public string InvertedTitle { get; set; }
 		[XmlArrayItem("AlternateTitle")]
 		public List<string> AlternateTitles { get; set; }
+		public string NativeLanguageTitle { get; set; }
 		public string Blurb { get; set; }
 		public List<CustomAttribute> CustomAttributes { get; set; }
+		public int? AuditUserId { get; set; }
 		public string LegacyId { get; set; }
-
-
-
 		
 		// this should only exist in the create request, but the create request happens when the binary is created and the slug is not available
 		public string Slug { get; set; }
 
-
 		public Gender Gender { get; set; }
 		public List<AgeCategory> AgeCategories { get; set; }
 
-
 		// binary only
-
 		public Guid? Replacement { get; set; }
 		[XmlArrayItem("Tag")]
 		public List<string> Tags { get; set; }

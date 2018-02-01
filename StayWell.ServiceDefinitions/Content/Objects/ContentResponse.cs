@@ -16,6 +16,10 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		public DateTime DateModified { get; set; }
 		public DateTime DateUpdated { get; set; }
 		public string Title { get; set; }
+		public string InvertedTitle { get; set; }
+		[XmlArrayItem("AlternateTitle")]
+		public List<string> AlternateTitles { get; set; }
+		public string NativeLanguageTitle { get; set; }
 		public string Slug { get; set; }
 		public string Blurb { get; set; }
 		public ContentType Type { get; set; }
@@ -23,9 +27,6 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		public string Copyright { get; set; }
 		public ContentBucketReference Bucket { get; set; }
 		public string OriginName { get; set; }
-		public string InvertedTitle { get; set; }
-		[XmlArrayItem("AlternateTitle")]
-		public List<string> AlternateTitles { get; set; }
 		public Language Language { get; set; }
 		public bool? Master { get; set; }
 		public Guid? MasterId { get; set; }
@@ -79,11 +80,21 @@ namespace StayWell.ServiceDefinitions.Content.Objects
         public string ImageUri { get; set; }
         public string Transcript { get; set; }
         public string ClosedCaptioning { get; set; }
+        public List<ClosedCaption> ClosedCaptions { get; set; }
 
         [XmlArrayItem("Format")]
-        public List<StreamingMediaFormat> StreamingMediaFormats { get; set; }
+        public List<StreamingMediaFormatResponse> StreamingMediaFormats { get; set; }
 
 		[XmlArrayItem("Keyword")]
 		public List<string> Keywords { get; set; }
+
+		public double Rating { get; set; }
+		public long RatingsCount { get; set; }
+		public long ViewCount { get; set; }
+
+		public Dictionary<string, List<string>> SearchHighlights { get; set; }
+
+		// only for kod custom content -- should do something like customvalues for fields like these
+		public int? AuditUserId { get; set; }
 	}
 }

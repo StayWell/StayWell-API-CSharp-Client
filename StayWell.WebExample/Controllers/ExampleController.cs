@@ -40,16 +40,16 @@ namespace StayWell.WebExample.Controllers
 			//Request the specific article.  If you intend to display the full article you must send the flag "IncludeBody"
 			try
 			{
-				model.Article = _client.Content.GetContent(bucketSlugValue, contentSlugValue, new GetContentOptions
-				{
-					IncludeBody = true
-				});
+                model.Article = _client.Content.GetContent(bucketSlugValue, contentSlugValue, new GetContentOptions
+                {
+                    IncludeBody = true
+                });
 
 				//If the article is streaming media then we need to get more details about the content
 				//so that we can render the video tag.
 				if (model.Article.Type == ContentType.StreamingMedia)
 				{
-					model.StreamingMedia = _client.StreamingMedia.GetStreamingMedia(bucketSlugValue, contentSlugValue, new GetContentOptions
+					model.StreamingMedia = _client.StreamingMedia.GetStreamingMedia(bucketSlugValue, contentSlugValue, new GetStreamingMediaOptions()
 					{
 						IncludeBody = true,
 						EditMode = false
@@ -74,7 +74,7 @@ namespace StayWell.WebExample.Controllers
 
 			//Get the relations
 			model.RelatedContent = GetRelatedContentGrouped(model.Article);
-			model.RelatedContent.AddRange(GetRelatedServicesGrouped(model.Article));
+			
 
 			return View(model);
 		}
@@ -100,7 +100,7 @@ namespace StayWell.WebExample.Controllers
 			if (string.IsNullOrEmpty(bucketSlugValue)) return HttpNotFound("Sorry, the content was not found.");
 			if (string.IsNullOrEmpty(contentSlugValue)) return HttpNotFound("Sorry, the content was not found.");
 
-			StreamingMediaResponse media = _client.StreamingMedia.GetStreamingMedia(bucketSlugValue, contentSlugValue, new GetContentOptions
+			StreamingMediaResponse media = _client.StreamingMedia.GetStreamingMedia(bucketSlugValue, contentSlugValue, new GetStreamingMediaOptions()
 			{
 				IncludeBody = true,
 				EditMode = false
@@ -135,7 +135,7 @@ namespace StayWell.WebExample.Controllers
 
 		public ActionResult TopicExplorer(string collectionSlug, string bucketSlug, string contentSlug)
 		{
-			CollectionResponse response = _client.Collections.GetCollection(collectionSlug, false, false, false);
+			CollectionResponse response = _client.Collections.GetCollection(collectionSlug, false, false, false,null,false,false);
 			ViewData["Title"] = response.Title;
 			
 			return View();
@@ -200,7 +200,7 @@ namespace StayWell.WebExample.Controllers
 		{
 			//Use the helper extension to get related service lines.
 			ApiClientExtension extension = new ApiClientExtension(_client);
-			List<ServiceLineMappingResponse> mappings = extension.GetMappedServices(content);
+			List<MappingResponse> mappings = extension.GetMappedServices(content);
 
 			//Map the related services to the grouped content model
 			MappingToGroupedContentModelMapper mapper = new MappingToGroupedContentModelMapper();

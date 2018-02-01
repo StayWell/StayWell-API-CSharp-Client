@@ -46,6 +46,7 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 
 		// from BinaryDetailRequest
 		public string Title { get; set; }
+		public string NativeLanguageTitle { get; set; }
 		public string Slug { get; set; }
 		public string InvertedTitle { get; set; }
 		[XmlArrayItem("AlternateTitle")]
@@ -71,5 +72,13 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 
 		public List<AgeCategory> AgeCategories { get; set; }
 		public Gender Gender { get; set; }
+
+		public int? AuditUserId { get; set; }
+	}
+
+	public class BinaryDetailUpdateResponse : BinaryDetailResponse, IContentMetaDataBaseUpdateResponse
+	{
+		public bool DraftUpdated { get; set; }
+		public bool PublishedUpdated { get; set; }
 	}
 }

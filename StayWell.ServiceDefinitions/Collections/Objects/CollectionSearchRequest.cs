@@ -1,4 +1,5 @@
-﻿using StayWell.Interface;
+﻿using System;
+using StayWell.Interface;
 
 namespace StayWell.ServiceDefinitions.Collections.Objects
 {
@@ -6,6 +7,7 @@ namespace StayWell.ServiceDefinitions.Collections.Objects
     {
 		public bool? Flagged { get; set; }
         public string TitleStartsWith { get; set; }
+		public Guid? LicenseId { get; set; }
 
         public CollectionSearchSortField? SortField1 { get; set; }
         public SortDirection? SortDirection1 { get; set; }

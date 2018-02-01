@@ -7,7 +7,7 @@ namespace StayWell.Interface
 		public AllowAttribute()
 		{
 			// default to not logging, only log explicitly specified logging
-			Logging = AllowedLogging.NeverLog;
+			Logging = AllowedLogging.VerboseLogging;
 			Documentation = true;
 		}
 

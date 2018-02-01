@@ -15,7 +15,10 @@ namespace StayWell.ServiceDefinitions.Collections.Objects
 		public string Description { get; set; }
 		public string CollectionLegacyId { get; set; }
 		public string RootLegacyId { get; set; }
-		public string DynamicBucketIdOrSlug { get; set; }
+		
+		//public string DynamicBucketIdOrSlug { get; set; }
+		public List<string> DynamicBucketIdsOrSlugs { get; set; }
+
 		public string DynamicLanguageCode { get; set; }
 		public List<string> DynamicMeshCodes { get; set; }
         public List<ServiceLineRequest> DynamicServiceLines { get; set; }

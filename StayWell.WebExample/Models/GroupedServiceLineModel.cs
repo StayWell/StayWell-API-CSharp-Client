@@ -10,9 +10,9 @@ namespace StayWell.WebExample.Models
     {
         public GroupedRelatedServices()
         {
-            RelatedServices = new List<ServiceLineMappingResponse>();
+            RelatedServices = new List<MappingResponse>();
         }
         public string Group { get; set; }
-        public List<ServiceLineMappingResponse> RelatedServices { get; set; }
+        public List<MappingResponse> RelatedServices { get; set; }
     }
 }

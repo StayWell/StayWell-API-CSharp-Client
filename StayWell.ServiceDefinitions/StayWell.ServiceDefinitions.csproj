@@ -24,6 +24,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -89,6 +91,8 @@
     <Compile Include="Content\ContentStage.cs" />
     <Compile Include="Content\Interfaces\IContentCreateRequest.cs" />
     <Compile Include="Content\Interfaces\IContentRequest.cs" />
+    <Compile Include="Content\Interfaces\ILicensedRequest.cs" />
+    <Compile Include="Content\IPublicProviderStreamingMediaService.cs" />
     <Compile Include="Content\IPublicContentService.cs" />
     <Compile Include="Content\IPublicStreamingMediaService.cs" />
     <Compile Include="Content\Objects\AbbreviatedCollectionListResponse.cs" />
@@ -97,8 +101,10 @@
     <Compile Include="Content\Objects\BinaryDetailInitializationRequest.cs" />
     <Compile Include="Content\Objects\BinaryDetailRequest.cs" />
     <Compile Include="Content\Objects\BinaryDetailResponse.cs" />
+    <Compile Include="Content\Objects\ClosedCaptionsType.cs" />
     <Compile Include="Content\Objects\ContentArticleRequest.cs" />
     <Compile Include="Content\Objects\ContentArticleResponse.cs" />
+    <Compile Include="Content\Objects\ContentArticleUpdateResponse.cs" />
     <Compile Include="Content\Objects\ContentBase.cs" />
     <Compile Include="Content\Objects\ContentEncodingType.cs" />
     <Compile Include="Content\Objects\ContentHistoryItemResponse.cs" />
@@ -107,6 +113,13 @@
     <Compile Include="Content\Objects\ContentMetadataResponse.cs" />
     <Compile Include="Content\Objects\ContentOriginType.cs" />
     <Compile Include="Content\Objects\ContentRatingResponse.cs" />
+    <Compile Include="Content\Objects\SearchSuggestionsRequest.cs" />
+    <Compile Include="Content\Objects\GetLegacyStreamingMediaOptions.cs" />
+    <Compile Include="Content\Objects\AwsUploadBucket.cs" />
+    <Compile Include="Content\Objects\MediaProviderRepositoryItemsResponse.cs" />
+    <Compile Include="Content\Objects\PublishCodeVariant.cs" />
+    <Compile Include="Content\Objects\ContentVideoPlayerRequest.cs" />
+    <Compile Include="Content\Objects\ContentVideoPlayerResponse.cs" />
     <Compile Include="Content\Objects\ContentResponse.cs" />
     <Compile Include="Content\Objects\ContentRevisionType.cs" />
     <Compile Include="Content\Objects\ContentSearchRequest.cs" />
@@ -124,10 +137,12 @@
     <Compile Include="Content\Objects\FileFormatResponseList.cs" />
     <Compile Include="Content\Objects\FormatType.cs" />
     <Compile Include="Content\Objects\GetContentBase.cs" />
+    <Compile Include="Content\Objects\GetStreamingMediaOptions.cs" />
     <Compile Include="Content\Objects\GetContentOptions.cs" />
     <Compile Include="Content\Interfaces\IContentMetaDataBaseResponse.cs" />
     <Compile Include="Content\Objects\ImageDetailCreateRequest.cs" />
     <Compile Include="Content\Objects\ImageDetailInitializationRequest.cs" />
+    <Compile Include="Content\Objects\ProviderStreamingMediaFormatResponse.cs" />
     <Compile Include="Content\Objects\RelatedContentSearchRequest.cs" />
     <Compile Include="Content\Objects\ImageDetailRequest.cs" />
     <Compile Include="Content\Objects\ImageDetailResponse.cs" />
@@ -150,6 +165,8 @@
     <Compile Include="Content\Objects\RelatedContentResponse.cs" />
     <Compile Include="Content\Objects\SearchExclusion.cs" />
     <Compile Include="Content\Objects\SearchOption.cs" />
+    <Compile Include="Content\Objects\SearchSuggestionsListResponse.cs" />
+    <Compile Include="Content\Objects\SearchSuggestionsResponse.cs" />
     <Compile Include="Content\Objects\SearchType.cs" />
     <Compile Include="Content\Objects\SegmentedContentMetadataResponse.cs" />
     <Compile Include="Content\Objects\SegmentedContentRequest.cs" />
@@ -159,7 +176,10 @@
     <Compile Include="Content\Objects\ServiceLineResponseList.cs" />
     <Compile Include="Content\Objects\StreamingMediaFormat.cs" />
     <Compile Include="Content\Objects\StreamingMediaFormatResponse.cs" />
+    <Compile Include="Content\Objects\ProviderStreamingMediaResponse.cs" />
+    <Compile Include="Content\Objects\ClosedCaption.cs" />
     <Compile Include="Content\Objects\StreamingMediaResponse.cs" />
+    <Compile Include="Content\Objects\StreamingMediaUpdateResponse.cs" />
     <Compile Include="Content\Objects\TaxonomyListResponse.cs" />
     <Compile Include="Content\Objects\TaxonomyValueSource.cs" />
     <Compile Include="Content\Objects\ContainerType.cs" />
@@ -180,10 +200,12 @@
     <Compile Include="Mapping\Objects\MappingStatisticsResponse.cs" />
     <Compile Include="Mapping\Objects\MappingTypeListResponse.cs" />
     <Compile Include="Mapping\Objects\MappingTypeResponse.cs" />
+    <Compile Include="Mapping\Objects\NamedServiceLineMappingResponseList.cs" />
     <Compile Include="Mapping\Objects\PagedMappingResponseList.cs" />
     <Compile Include="Mapping\Objects\PublishedChangeResponse.cs" />
     <Compile Include="Mapping\Objects\ServiceLineMappingResponse.cs" />
     <Compile Include="Mapping\Objects\ServiceLineMappingResponseList.cs" />
+    <Compile Include="Mapping\Objects\ServiceLineMappingsBulkRequest.cs" />
     <Compile Include="Mapping\Objects\UnpublishedChangeResponse.cs" />
     <Compile Include="Mapping\Objects\UploadResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -199,7 +221,10 @@
     <Compile Include="ServiceLines\Objects\ServiceLineItemResponse.cs" />
     <Compile Include="ServiceLines\Objects\ServiceLineSearchRequest.cs" />
     <Compile Include="ServiceLines\Objects\UpdateServiceLineRequest.cs" />
+    <Compile Include="Taxonomies\IPublicMeshCodeService.cs" />
     <Compile Include="Taxonomies\IPublicTaxonomyService.cs" />
+    <Compile Include="Taxonomies\Objects\MeshCodeResponse.cs" />
+    <Compile Include="Taxonomies\Objects\MeshCodeResponseList.cs" />
     <Compile Include="Taxonomies\Objects\TaxonomyTypeList.cs" />
     <Compile Include="Taxonomies\Objects\TaxonomyTypeResponse.cs" />
   </ItemGroup>

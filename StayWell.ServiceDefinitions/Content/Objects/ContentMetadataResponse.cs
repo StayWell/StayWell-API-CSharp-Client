@@ -30,6 +30,8 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		[XmlArrayItem("AlternateTitle")]
 		public List<string> AlternateTitles { get; set; }
 
+		public string NativeLanguageTitle { get; set; }
+
 		public string Slug { get; set; }
 
 		public string Blurb { get; set; }
@@ -66,5 +68,12 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		public double Rating { get; set; }
 		public long RatingsCount { get; set; }
 		public long ViewCount { get; set; }
+
+		public int? AuditUserId { get; set; }
+
+
+		/*// TODO: move to separate interface
+		public bool DraftUpdated { get; set; }
+		public bool PublishedUpdated { get; set; }*/
 	}
 }

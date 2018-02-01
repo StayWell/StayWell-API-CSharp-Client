@@ -24,7 +24,7 @@ namespace StayWell.WebExample.Controllers
         private const int TRIM_COUNT = 3;
 
         //Create an authenticated SW API client
-        private ApiClient _client = new ApiClient(ConfigurationManager.AppSettings["ApplicationId"], ConfigurationManager.AppSettings["ApplicationSecret"]);
+        private ApiClient _client = new ApiClient(ConfigurationManager.AppSettings["ApplicationId"], SimpleContrivedEncryptionClass.DecryptString(ConfigurationManager.AppSettings["ApplicationSecret"]));
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
@@ -409,7 +409,7 @@ namespace StayWell.WebExample.Controllers
 
         private List<CollectionItemResponse> GetAllContentForCollection(string collectionSlug)
         {
-            CollectionResponse collection = _client.Collections.GetCollection(collectionSlug, true, true, true);
+            CollectionResponse collection = _client.Collections.GetCollection(collectionSlug, true, true, true,null,false,false);
             List<CollectionItemResponse> flattenedCollectionList = GetFlattenedListOfContent(collection.Items);
 
             return flattenedCollectionList;

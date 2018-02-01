@@ -24,7 +24,7 @@ namespace StayWell.WebExample.Api
             StreamingMediaResponse streamingMedia;
             try
             {
-                streamingMedia = _client.StreamingMedia.GetStreamingMedia(bucketSlug, contentSlug, new GetContentOptions
+                streamingMedia = _client.StreamingMedia.GetStreamingMedia(bucketSlug, contentSlug, new GetStreamingMediaOptions()
                 {
                      IncludeBody = true,
                      EditMode = true

@@ -5,9 +5,8 @@ using StayWell.ServiceDefinitions.Content.Objects;
 
 namespace StayWell.ServiceDefinitions.Content.Interfaces
 {
-	public interface IContentRequest
+	public interface IContentRequest : ILicensedRequest
 	{
-		Guid? LicenseId { get; set; }
 		DateTime? LastReviewedDate { get; set; }
 		DateTime? PostingDate { get; set; }
 		List<ContentTaxonomyListRequest> Taxonomies { get; set; }
@@ -17,10 +16,13 @@ namespace StayWell.ServiceDefinitions.Content.Interfaces
 		bool Publish { get; set; }
 		string Title { get; set; }
 		string InvertedTitle { get; set; }
+		string NativeLanguageTitle { get; set; }
 		[XmlArrayItem("AlternateTitle")]
 		List<string> AlternateTitles { get; set; }
 		string Blurb { get; set; }
 		string LegacyId { get; set; }
 		List<CustomAttribute> CustomAttributes { get; set; }
+
+		int? AuditUserId { get; set; }
 	}
 }

@@ -7,6 +7,7 @@
 		LogWithoutParametersOrBody,
 		LogWithoutBody,
 		LogException,
-		LogExceptionWithoutBody
+		LogExceptionWithoutBody,
+		VerboseLogging
 	}
 }

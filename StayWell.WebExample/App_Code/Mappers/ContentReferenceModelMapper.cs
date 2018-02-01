@@ -32,7 +32,7 @@ namespace StayWell.WebExample.App_Code.Mappers
 
             if (source.Type == ContentType.StreamingMedia)
             {
-                StreamingMediaResponse media = _client.StreamingMedia.GetStreamingMedia(source.Bucket.Slug, source.Slug, new GetContentOptions
+                StreamingMediaResponse media = _client.StreamingMedia.GetStreamingMedia(source.Bucket.Slug, source.Slug, new GetStreamingMediaOptions
                 {
                     IncludeBody = true,
                     EditMode = true

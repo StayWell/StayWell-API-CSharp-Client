@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 using StayWell.ServiceDefinitions.Common.Objects;
+using StayWell.ServiceDefinitions.Content.Interfaces;
 
 namespace StayWell.ServiceDefinitions.Content.Objects
 {
@@ -16,5 +17,12 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		public List<Language> AssociatedLanguages { get; set; }
         public string AlternateText { get; set; }
         public string Caption { get; set; }
+	}
+
+
+	public class ImageDetailUpdateResponse : ImageDetailResponse, IContentMetaDataBaseUpdateResponse
+	{
+		public bool DraftUpdated { get; set; }
+		public bool PublishedUpdated { get; set; }
 	}
 }

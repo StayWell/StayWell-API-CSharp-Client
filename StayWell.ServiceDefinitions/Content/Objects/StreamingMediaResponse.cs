@@ -11,6 +11,8 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 
         public string Transcript { get; set; }
         public string ClosedCaptioning { get; set; }
+        public List<ClosedCaption> ClosedCaptions { get; set; }
+
         [XmlArrayItem("Format")]
         public List<StreamingMediaFormatResponse> Formats { get; set; }
 	}

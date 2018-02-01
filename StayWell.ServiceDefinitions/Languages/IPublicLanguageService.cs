@@ -11,6 +11,7 @@ namespace StayWell.ServiceDefinitions.Languages
 		[WebInvoke(UriTemplate = "", Method = "GET")]
 		[OperationContract]
 		[Allow(ClientType = ClientType.Internal, Rights = "Read_Content", SpecialAccess = AllowedSpecialAccess.Jsonp)]
+		[Document("Get available languages for a specific content item, or all languages if no content identifier is provided")]
 		LanguageList GetLanguages(string bucketIdOrSlug, string contentIdOrSlug);
 	}
 }

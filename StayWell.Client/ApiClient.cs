@@ -20,6 +20,11 @@ namespace StayWell.Client
 		{
 		}
 
+		public ApiClient(string serviceUri, string applicationId, string applicationSecret)
+			: base(serviceUri, applicationId, applicationSecret, TokenStoreType.PerClient)
+		{
+		}
+
 		public ApiClient(string applicationId, string applicationSecret, TokenStoreType tokenStoreType)
 			: base(applicationId, applicationSecret, tokenStoreType)
 		{
@@ -50,5 +55,6 @@ namespace StayWell.Client
 		public IPublicSecurityService Security { get { return GetService<IPublicSecurityService>(); } }
 		public IPublicServiceLineService ServiceLines { get { return GetService<IPublicServiceLineService>(); } }
 		public IPublicTaxonomyService Taxonomies { get { return GetService<IPublicTaxonomyService>(); } }
+		public IPublicMeshCodeService MeshCodes { get { return GetService<IPublicMeshCodeService>(); } }
 	}
 }

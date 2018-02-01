@@ -21,7 +21,7 @@ namespace StayWell.WebExample.Api
         public CollectionResponse Get(string collectionSlug)
         {
             //Execute the query
-            CollectionResponse collection = _client.Collections.GetCollection(collectionSlug, true, true, true);
+            CollectionResponse collection = _client.Collections.GetCollection(collectionSlug, true, true, true,null,false,false);
             return collection;
         }
 
@@ -29,7 +29,7 @@ namespace StayWell.WebExample.Api
         public CollectionResponse GetLite(string collectionSlug)
         {
             //Execute the query
-            CollectionResponse collection = _client.Collections.GetCollection(collectionSlug, true, false, false);
+            CollectionResponse collection = _client.Collections.GetCollection(collectionSlug, true, false, false, null);
             return collection;
         }
     }

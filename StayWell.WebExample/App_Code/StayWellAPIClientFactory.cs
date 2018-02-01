@@ -13,7 +13,7 @@ namespace StayWell.WebExample.App_Code
         
         public static ApiClient GetApiClient()
         {
-            return new ApiClient(ConfigurationManager.AppSettings["ApplicationId"], ConfigurationManager.AppSettings["ApplicationSecret"]);
+            return new ApiClient(ConfigurationManager.AppSettings["ApplicationId"], SimpleContrivedEncryptionClass.DecryptString(ConfigurationManager.AppSettings["ApplicationSecret"]));
         }
     }
 }

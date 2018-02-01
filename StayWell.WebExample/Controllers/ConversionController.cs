@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using StayWell.WebExample.App_Code;
 
 namespace StayWell.WebExample.Controllers
 {
@@ -16,7 +17,7 @@ namespace StayWell.WebExample.Controllers
         private const int DEFAULT_COUNT = 50;
 
         //Create an authenticated SW API client
-        private ApiClient _client = new ApiClient(ConfigurationManager.AppSettings["ApplicationId"], ConfigurationManager.AppSettings["ApplicationSecret"]);
+        private ApiClient _client = new ApiClient(ConfigurationManager.AppSettings["ApplicationId"], SimpleContrivedEncryptionClass.DecryptString(ConfigurationManager.AppSettings["ApplicationSecret"]));
 
         #region Public Controller Actions
 

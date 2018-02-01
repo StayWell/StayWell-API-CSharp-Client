@@ -1,49 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace StayWell.Interface
 {
-	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Interface | AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
 	public class DocumentAttribute : Attribute
 	{
-		public DocumentAttribute()
+		public DocumentAttribute(string summary = null, string description = null, string tags = null)
 		{
-
-		}
-
-		public DocumentAttribute(string description, params string[] notes)
-		{
+			Summary = summary;
 			Description = description;
-			Notes = notes == null ? new List<string>() : notes.ToList();
+			Tags = tags;
 		}
 
-		public DocumentAttribute(UseType usage, string description, params string[] notes)
+		public DocumentAttribute(UseType usage, string summary = null, string description = null, string tags = null)
 		{
 			Usage = usage;
-			Description = description;
-			Notes = notes == null ? new List<string>() : notes.ToList();
-		}
-
-		public DocumentAttribute(string name, string description, params string[] notes)
-		{
-			Name = name;
-			Description = description;
-			Notes = notes == null ? new List<string>() : notes.ToList();
-		}
-
-		public DocumentAttribute(string name, UseType usage, string description, params string[] notes)
-		{
-			Name = name;
-			Usage = usage;
-			Description = description;
-			Notes = notes == null ? new List<string>() : notes.ToList();
+			Summary = summary;
+			Description = description == null ? null : string.Join(Environment.NewLine + Environment.NewLine, description);
+			Tags = tags;
 		}
 
 		public string Name { get; set; }
+		public string Summary { get; set; }
 		public string Description { get; set; }
-		public List<string> Notes { get; set; }
 		public UseType Usage { get; set; }
 		public AdvancedType AdvancedType { get; set; }
+		public string Tags { get; set; }
 	}
 }

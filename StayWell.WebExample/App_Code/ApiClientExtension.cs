@@ -66,10 +66,10 @@ namespace StayWell.WebExample.App_Code
             return contentResponses;
         }
 
-        public List<ServiceLineMappingResponse> GetMappedServices(ContentArticleResponse content)
+        public List<MappingResponse> GetMappedServices(ContentArticleResponse content)
         {
             //Get the mappings
-            List<ServiceLineMappingResponse> mappings = new List<ServiceLineMappingResponse>();
+            List<MappingResponse> mappings = new List<MappingResponse>();
             foreach (ServiceLineResponse serviceLine in content.ServiceLines)
             {
                 //There are 4 types of mappings that could be returned.  We must iterate over each.
@@ -82,7 +82,7 @@ namespace StayWell.WebExample.App_Code
                     } catch (ServiceException ex)
                     {
                         //Not all clients purchase iMapping.  If iMapping is not part of the package simply return an empty list.
-                        if (ex.StatusCode == System.Net.HttpStatusCode.Forbidden) return new List<ServiceLineMappingResponse>();
+                        if (ex.StatusCode == System.Net.HttpStatusCode.Forbidden) return new List<MappingResponse>();
                         throw ex;
                     }  
                 }

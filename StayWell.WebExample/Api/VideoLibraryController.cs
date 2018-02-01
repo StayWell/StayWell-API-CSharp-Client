@@ -13,41 +13,39 @@ using System.Web.Http;
 namespace StayWell.WebExample.Api
 {
     public class VideoLibraryController : ApiController
-    {
-        private const int VIDEOS_PER_PAGE = 4;
+    {        
 
         private ApiClient _client = StayWellAPIClientFactory.GetApiClient();
 
-        [Route("api/videolibrary/{category}")]
-        public GroupedContentModel Get(string category, int skip = 0, int top = 4)
+        [Route("api/videolibrary")]
+        public GroupedContentModel Get( int skip = 0, int top = 4)
         {
-            GroupedContentModel groupedContent = new GroupedContentModel();
-
-            ContentCategoryList categoryList = ContentCategoryFactory.GetVideoLibraryCategories();
-
-            ContentReferenceModelMapper mapper = new ContentReferenceModelMapper();
-            Category mappedCategory = categoryList.Categories.Find(c => c.Slug.Equals(category, StringComparison.InvariantCultureIgnoreCase));
-
-            //Create the query
-            string query = GetQueryStringFromServiceLines(mappedCategory);
-
-            //Execute the query
-            ContentList videos = _client.Content.SearchContent(new ContentSearchRequest
+            //Model used for the view
+            var groupedContent = new GroupedContentModel();
+            //Service lines must include an audience, service line, and keyword separated by a '/'; for example: \"adult/diabetes/diabetes
+            //Create a ContentSearchRequest object to search content
+            var videos = _client.Content.SearchContent(new ContentSearchRequest
             {
                 Count = top,
                 Offset = skip,
-                Buckets = new List<string> { "videos-v2" },
                 Languages = new List<string> { "en" },
-                Query = query
-            });
+                ServiceLines = new List<string>()
+                {
+                    "adult/gastroenterology/hepatitis-c",
+                    "adult/infectious-disease/hepatitis-c"
+                }
+        });
+
+            //Mapper to map content for viewing and retreiving body of streaming media
+            var mapper = new ContentReferenceModelMapper();
 
             //Create the model
             if (videos.Items.Count > 0)
             {
                 groupedContent = new GroupedContentModel
                 {
-                    Slug = mappedCategory.Slug,
-                    Title = mappedCategory.Names.Find(c => c.LanguageCode == "en").Value,
+                    Slug = "hepatitis",
+                    Title = "Hepatitis",
                     Total = videos.Total
                 };
 
@@ -60,19 +58,6 @@ namespace StayWell.WebExample.Api
             return groupedContent;
         }
 
-        #region Private Methods
-        private string GetQueryStringFromServiceLines(Category category)
-        {
-            //Create the query
-            string query = string.Empty;
-            if (category.ServiceLines.Count > 0) query = "service-line: adult\\/" + category.ServiceLines[0].Slug + "\\/*";
-            for (int i = 1; i < category.ServiceLines.Count; i++)
-            {
-                query += " OR service-line: adult\\/" + category.ServiceLines[i].Slug + "\\/*";
-            }
 
-            return query;
-        }
-        #endregion
     }
 }

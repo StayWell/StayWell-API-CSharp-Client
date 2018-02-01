@@ -9,6 +9,7 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		public string Slug { get; set; }
 		public ContentBucketReference Bucket { get; set; }
 		public string Title { get; set; }
+		public string NativeLanguageTitle { get; set; }
 		public Language Language { get; set; }
 
 		//

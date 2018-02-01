@@ -29,6 +29,7 @@ namespace StayWell.ServiceDefinitions.Content.Interfaces
 		bool IsCustom { get; set; }
 		bool IsClientOwned { get; set; }
 		string Title { get; set; }
+		string NativeLanguageTitle { get; set; }
 		string Slug { get; set; }
 		string InvertedTitle { get; set; }
 		//[XmlArrayItem("AlternateTitle")]
@@ -52,5 +53,16 @@ namespace StayWell.ServiceDefinitions.Content.Interfaces
 
 		List<AgeCategory> AgeCategories { get; set; }
 		Gender Gender { get; set; }
+
+		int? AuditUserId { get; set; }
+
+	/*	bool DraftUpdated { get; set; }
+		bool PublishedUpdated { get; set; }*/
+	}
+
+	public interface IContentMetaDataBaseUpdateResponse : IContentMetaDataBaseResponse
+	{
+		bool DraftUpdated { get; set; }
+		bool PublishedUpdated { get; set; }
 	}
 }

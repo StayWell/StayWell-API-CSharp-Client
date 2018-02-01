@@ -1,8 +1,10 @@
-﻿namespace StayWell.ServiceDefinitions.Content.Objects
+﻿using System;
+
+namespace StayWell.ServiceDefinitions.Content.Objects
 {
 	public enum ContentSortBy
 	{
-		Relavence,
+		Relevance,
 		TitleAscending,
 		TitleDescending,
 		DatePublishedAscending,
@@ -14,6 +16,9 @@
 		ViewCountAscending,
 		ViewCountDescending,
 		RatingAscending,
-		RatingDescending
+		RatingDescending,
+
+		[Obsolete("Use Relevance")]
+		Relavence, // spelling!
 	}
 }

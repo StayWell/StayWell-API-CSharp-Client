@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using StayWell.Interface;
 using StayWell.ServiceDefinitions.Buckets.Objects;
+using StayWell.ServiceDefinitions.Common.Objects;
 using StayWell.ServiceDefinitions.Content.Objects;
 
 namespace StayWell.ServiceDefinitions.Collections.Objects
@@ -15,11 +17,13 @@ namespace StayWell.ServiceDefinitions.Collections.Objects
 		public string Slug { get; set; }
 		public string LegacyId { get; set; }
 		public string Title { get; set; }
+		public string NativeLanguageTitle { get; set; }
 		public string Description { get; set; }
 		public bool? Flagged { get; set; }
 		public string FlagComment { get; set; }
 		public bool? Disabled { get; set; }
 		public DateTime DateAdded { get; set; }
+		public List<string> AlternateTitles { get; set; } 
 
 		// topic only:
 		public List<ContentType> ContentTypes { get; set; }
@@ -32,6 +36,7 @@ namespace StayWell.ServiceDefinitions.Collections.Objects
 
         // TODO: add property for BucketFilterReference for clarity (content vs dynamic topic)? (public ContentBucketReference BucketId)
         public ContentBucketReference Bucket { get; set; }
+		public List<ContentBucketReference> DynamicBuckets { get; set; }
 
         // TODO: Rename to reflect they are for dynamic topic
         public Language Language { get; set; }
@@ -39,8 +44,13 @@ namespace StayWell.ServiceDefinitions.Collections.Objects
         
 		// content only (convenience info):
         public ContentType ContentType { get; set; }
+        // content only
+        public bool IsCustom { get; set; }
 		public List<ServiceLineResponse> ServiceLines { get; set; }
 		public ContainerType ContainerType { get; set; }
         //public ContentBucketReference Bucket { get; set; }
+		public Gender? Gender { get; set; }
+		[XmlArrayItem("AgeCategory")]
+		public List<AgeCategory> AgeCategories { get; set; }
 	}
 }

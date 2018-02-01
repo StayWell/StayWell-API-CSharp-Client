@@ -21,7 +21,9 @@ namespace StayWell.ServiceDefinitions.Collections.Objects
 		public ContainerType ContainerType { get; set; }
 
         // TODO: Rename to reflect they are for dynamic topic
-		public string BucketIdOrSlug { get; set; }
+		//public string BucketIdOrSlug { get; set; }
+
+		public List<string> DynamicBucketIdsOrSlugs { get; set; }
 		public string LanguageCode { get; set; }
 		public List<string> MeshCodes { get; set; }
         public List<ServiceLineRequest> ServiceLines { get; set; }

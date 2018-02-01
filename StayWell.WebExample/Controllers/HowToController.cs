@@ -15,7 +15,7 @@ namespace StayWell.WebExample.Controllers
 		private const int DEFAULT_COUNT = 50;
 
 		//Create an authenticated SW API client
-		private ApiClient _client = new ApiClient(ConfigurationManager.AppSettings["ApplicationId"], ConfigurationManager.AppSettings["ApplicationSecret"]);
+		private ApiClient _client = new ApiClient(ConfigurationManager.AppSettings["ApplicationId"], SimpleContrivedEncryptionClass.DecryptString(ConfigurationManager.AppSettings["ApplicationSecret"]));
 
 		#region Public Controller Actions
 
@@ -53,8 +53,8 @@ namespace StayWell.WebExample.Controllers
 		public ActionResult DisplayVideo()
 		{
 			//Request the specific article.  If you intend to display the full article you must send the flag "IncludeBody"
-			StreamingMediaResponse video = _client.StreamingMedia.GetStreamingMedia("videos-v2", "carpal-tunnel-syndrome", new GetContentOptions
-			{
+			StreamingMediaResponse video = _client.StreamingMedia.GetStreamingMedia("videos-v2", "hepatitis-c", new GetStreamingMediaOptions
+            {
 				IncludeBody = true,
 				EditMode = false
 			});
@@ -67,7 +67,7 @@ namespace StayWell.WebExample.Controllers
 		// GET: /HowTo/DisplayCollection
 		public ActionResult DisplayCollection()
 		{
-			CollectionResponse collection = _client.Collections.GetCollection("development-sample-license", true, true, true);
+			CollectionResponse collection = _client.Collections.GetCollection("development-sample-license", true, true, true,null,false,false);
 
 			return View(collection);
 		}

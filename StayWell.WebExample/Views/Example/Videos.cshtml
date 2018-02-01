@@ -47,15 +47,7 @@
         });
 
         $(document).ready(function () {
-            LoadVideos("cardiovascular");
-            LoadVideos("cancer");
-            LoadVideos("diabetes");
-            LoadVideos("digestive");
-            LoadVideos("general-health");
-            LoadVideos("neurology");
-            LoadVideos("obstetrics-gynecology");
-            LoadVideos("respiratory");
-            LoadVideos("wellness");
+            LoadVideos();
         });
 
         var _loadingCount = 0;
@@ -79,7 +71,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "/api/videolibrary/" + categorySlug,
+                url: "/api/videolibrary" ,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
