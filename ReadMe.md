@@ -23,6 +23,7 @@ The ASP.NET Website contains a section of HowTo examples that demonstrate work w
 ## Best Practice Recommendations
 
 You will notice that we do not make API calls directly to the StayWell API from client side JavaScript code. While this is possible you will need to find a way to ensure that your Secret Key is safe and not exposed in client code. 
+
 We also implemented a very simple contrived encryption class to encrypt the Secret Key in the configuration files. Do not use this example in your implementation. Work with your security team to determine how to secure the Secret Key. **Do not follow our simple contrived encryption example**
 
 ## License
