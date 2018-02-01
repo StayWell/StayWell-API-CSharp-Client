@@ -1,6 +1,6 @@
 # StayWell API for .Net and Javascript Clients
 
-The most current documentation of the is located at [https://admin.kramesstaywell.com/] {https://admin.kramesstaywell.com/docs#articles/home-page}
+The most current documentation of the is located at [https://admin.kramesstaywell.com/](https://admin.kramesstaywell.com/docs#articles/home-page)
 
 ## About StayWell IQ API
 
@@ -26,7 +26,7 @@ You will notice that we do not make API calls directly to the StayWell API from 
 We also implemented a very simple contrived encryption class to encrypt the Secret Key in the configuration files. Do not use this example in your implementation. Work with your security team to determine how to secure the Secret Key. **Do not follow our simple contrived encryption example**
 
 ## License
-This project is licensed under the MIT License - see the [License]{LICENSE.txt}
+This project is licensed under the MIT License - see the [License](LICENSE.txt)
 
 
 
