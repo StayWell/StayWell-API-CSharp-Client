@@ -3,11 +3,29 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using StayWell.ServiceDefinitions.Buckets.Objects;
 using StayWell.ServiceDefinitions.Common.Objects;
+using StayWell.ServiceDefinitions.Extensions;
 
 namespace StayWell.ServiceDefinitions.Content.Objects
 {
     // TODO: Should be ContentSearchResponse
 
+    [SwaggerResponseDescription(@"The response Xml format for SearchHighlights will actually look like this example not the example below: 
+    <SearchHighlights>
+        <DictionaryOfStringAndListOfString>
+            <Key>test1</Key>
+            <Value>
+                <String>testString 1</String>
+                <String>testString2</String>
+            </Value>
+        </DictionaryOfStringAndListOfString>
+        <DictionaryOfStringAndListOfString>
+            <Key>test2</Key>
+            <Value>
+                <String>testString 1</String>
+                <String>testString2</String>
+            </Value>
+        </DictionaryOfStringAndListOfString>
+    </SearchHighlights>")]
     [XmlType("Content")]
 	public class ContentResponse
 	{

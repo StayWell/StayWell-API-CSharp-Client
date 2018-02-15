@@ -9,6 +9,7 @@ namespace StayWell.ServiceDefinitions.Content
 {
     [ServiceContract(Name = "Content", Namespace = "http://www.kramesstaywell.com")]
 	[Document]
+    // ReSharper disable once SeviceContractWithoutOperations
     public interface IPublicContentService
 	{
 		#region Articles
@@ -24,7 +25,7 @@ namespace StayWell.ServiceDefinitions.Content
 		[Document("Search for content")]
         ContentList SearchContent(ContentSearchRequest request);
 
-        [WebInvoke(UriTemplate = "{bucketIdOrSlug}/{idOrSlug}", Method = "GET")]
+	[WebInvoke(UriTemplate = "{bucketIdOrSlug}/{idOrSlug}", Method = "GET")]
         [Allow(ClientType = ClientType.Internal, Rights = "Read_Content", SpecialAccess = AllowedSpecialAccess.Jsonp)]
 		[Document("Get a specific piece of content")]
         ContentArticleResponse GetContent(string bucketIdOrSlug, string idOrSlug, GetContentOptions request);

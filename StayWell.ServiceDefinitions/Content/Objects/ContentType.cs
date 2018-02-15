@@ -8,6 +8,7 @@
 		Image = 3,
 		StreamingMedia = 4,
 		Binary = 5,
-		ClientPage = 6
+		ClientPage = 6,
+		Recipe = 7
 	}
 }

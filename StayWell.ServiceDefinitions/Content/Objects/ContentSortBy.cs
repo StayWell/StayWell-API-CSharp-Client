@@ -17,8 +17,10 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		ViewCountDescending,
 		RatingAscending,
 		RatingDescending,
+	    NativeTitleAscending,
+	    NativeTitleDescending,
 
-		[Obsolete("Use Relevance")]
+        [Obsolete("Use Relevance")]
 		Relavence, // spelling!
 	}
 }

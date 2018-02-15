@@ -50,6 +50,7 @@ namespace StayWell.Client
 		public IPublicCollectionService Collections { get { return GetService<IPublicCollectionService>(); } }
 		public IPublicContentService Content { get { return GetService<IPublicContentService>(); } }
 		public IPublicStreamingMediaService StreamingMedia { get { return GetService<IPublicStreamingMediaService>(); } }
+		public IPublicRecipesService Recipes { get { return GetService<IPublicRecipesService>(); } }
 		public IPublicLanguageService Languages { get { return GetService<IPublicLanguageService>(); } }
 		public IPublicMappingService Mappings { get { return GetService<IPublicMappingService>(); } }
 		public IPublicSecurityService Security { get { return GetService<IPublicSecurityService>(); } }

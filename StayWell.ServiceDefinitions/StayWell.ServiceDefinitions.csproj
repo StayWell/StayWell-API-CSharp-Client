@@ -41,6 +41,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -94,6 +95,7 @@
     <Compile Include="Content\Interfaces\ILicensedRequest.cs" />
     <Compile Include="Content\IPublicProviderStreamingMediaService.cs" />
     <Compile Include="Content\IPublicContentService.cs" />
+    <Compile Include="Content\IPublicRecipesService.cs" />
     <Compile Include="Content\IPublicStreamingMediaService.cs" />
     <Compile Include="Content\Objects\AbbreviatedCollectionListResponse.cs" />
     <Compile Include="Content\Objects\AbbreviatedCollectionResponse.cs" />
@@ -113,6 +115,13 @@
     <Compile Include="Content\Objects\ContentMetadataResponse.cs" />
     <Compile Include="Content\Objects\ContentOriginType.cs" />
     <Compile Include="Content\Objects\ContentRatingResponse.cs" />
+    <Compile Include="Content\Objects\ContentSearchWithSuggestionsRequest.cs" />
+    <Compile Include="Content\Objects\Ingredient.cs" />
+    <Compile Include="Content\Objects\IngredientSection.cs" />
+    <Compile Include="Content\Objects\NutritionInfo.cs" />
+    <Compile Include="Content\Objects\RecipeCategory.cs" />
+    <Compile Include="Content\Objects\RecipeResponse.cs" />
+    <Compile Include="Content\Objects\RecipeUpdateResponse.cs" />
     <Compile Include="Content\Objects\SearchSuggestionsRequest.cs" />
     <Compile Include="Content\Objects\GetLegacyStreamingMediaOptions.cs" />
     <Compile Include="Content\Objects\AwsUploadBucket.cs" />
@@ -184,6 +193,7 @@
     <Compile Include="Content\Objects\TaxonomyValueSource.cs" />
     <Compile Include="Content\Objects\ContainerType.cs" />
     <Compile Include="Content\Objects\TypeCount.cs" />
+    <Compile Include="Extensions\SwaggerResponseDescription.cs" />
     <Compile Include="Languages\IPublicLanguageService.cs" />
     <Compile Include="Languages\Objects\LanguageList.cs" />
     <Compile Include="Mapping\IPublicMappingService.cs" />
