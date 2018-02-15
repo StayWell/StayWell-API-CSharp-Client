@@ -287,15 +287,12 @@
     <Content Include="Views\Example\Captions.cshtml" />
     <Content Include="Views\HowTo\DisplayJSONP.cshtml" />
     <Content Include="Views\HowTo\DisplayArticleLink.cshtml" />
-    <Content Include="Views\Example\Anatomy3D.cshtml" />
     <Content Include="Views\Example\Videos.cshtml" />
     <Content Include="Views\Example\VideosByTopic.cshtml" />
     <Content Include="Views\License\DisplayServiceLines.cshtml" />
     <Content Include="Views\License\_PublicDemoWarningMessage.cshtml" />
     <Content Include="Views\Example\TopicExplorer.cshtml" />
     <Content Include="Views\HowTo\SearchByPublishedDate.cshtml" />
-    <Content Include="Views\Example\CenterPlugin.cshtml" />
-    <Content Include="Views\Example\AtoZPlugin.cshtml" />
     <Content Include="Views\HowTo\ConvertImagePopup.cshtml" />
   </ItemGroup>
   <ItemGroup>

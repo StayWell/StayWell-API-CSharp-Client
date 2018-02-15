@@ -108,17 +108,7 @@ namespace StayWell.WebExample.Controllers
 			return Content(media.ClosedCaptioning, "application/ttaf+xml");
 		}
 
-		public ActionResult Anatomy3D()
-		{
-			return View();
-		}
-
-		public ActionResult CenterPlugin()
-		{
-			return View();
-		}
-
-		public ActionResult Centers(string centerCategorySlug)
+        public ActionResult Centers(string centerCategorySlug)
 		{
 			return View();
 		}
@@ -128,10 +118,6 @@ namespace StayWell.WebExample.Controllers
 			return View();
 		}
 
-		public ActionResult AtoZPlugin()
-		{
-			return View();
-		}
 
 		public ActionResult TopicExplorer(string collectionSlug, string bucketSlug, string contentSlug)
 		{
