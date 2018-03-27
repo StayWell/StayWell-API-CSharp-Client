@@ -299,7 +299,7 @@ namespace StayWell.ClientFramework.Internal
 				Type type = parameterInfo.ParameterType;
 				if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
 					type = type.GetGenericArguments()[0];
-				if (type.IsPrimitive || type == typeof(string) || type == typeof(Guid) || type.IsEnum || type.IsArray)
+				if (type.IsPrimitive || type == typeof(string) || type == typeof(Guid) || type.IsEnum || type.IsArray || type == typeof(DateTime))
 				{
 					string name = parameterInfo.Name;
 

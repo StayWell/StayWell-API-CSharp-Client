@@ -34,6 +34,7 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 
 		public string Slug { get; set; }
 
+		[XmlElement]
 		public string Blurb { get; set; }
 
 		public Language Language { get; set; }

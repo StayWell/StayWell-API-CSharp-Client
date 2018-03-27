@@ -45,6 +45,7 @@ namespace StayWell.ServiceDefinitions.Content.Objects
 		[XmlArrayItem("AlternateTitle")]
 		public List<string> AlternateTitles { get; set; }
 
+		[XmlElement]
 		public string Blurb { get; set; }
 
 		public string LegacyId { get; set; }
